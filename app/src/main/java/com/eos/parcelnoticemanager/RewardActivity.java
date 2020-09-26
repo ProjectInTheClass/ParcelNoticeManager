@@ -1,6 +1,7 @@
 package com.eos.parcelnoticemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 public class RewardActivity extends AppCompatActivity {
