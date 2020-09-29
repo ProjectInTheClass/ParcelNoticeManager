@@ -4,32 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".LoginActivity">
 
     <View
-        android:id="@+id/view_main_upLine"
+        android:id="@+id/view_login_upLine"
         android:layout_width="300dp"
         android:layout_height="3dp"
         android:layout_marginBottom="15dp"
         android:background="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/textView_main_appName"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_appName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView_main_appName"
+        android:id="@+id/textView_login_appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="앱 이름"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_main_version"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_version"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView_main_version"
+        android:id="@+id/textView_login_version"
         android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginBottom="10dp"
@@ -37,82 +36,100 @@
         android:gravity="center"
         android:textColor="#FFFFFF"
         android:background="@drawable/all_button_background"
-        app:layout_constraintBottom_toTopOf="@+id/view_main_underLine"
+        app:layout_constraintBottom_toTopOf="@+id/view_login_underLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:id="@+id/view_main_underLine"
+        android:id="@+id/view_login_underLine"
         android:layout_width="300dp"
         android:layout_height="3dp"
         android:layout_marginBottom="30dp"
         android:background="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/imageView_main_mainImage"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_login_mainImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_main_mainImage"
+        android:id="@+id/imageView_login_mainImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="70dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_main_parcel"
+        app:layout_constraintBottom_toTopOf="@+id/editText_login_school"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/button_main_parcel"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/editText_login_school"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/login_background"
+        android:hint="학교 이름"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/editText_login_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_login_password"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/all_button_background"
-        android:text="택배 등록"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_main_room"
+        android:background="@drawable/login_background"
+        android:hint="비밀번호"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        android:password="true"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_login_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button_main_room"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:id="@+id/button_login_login"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="3dp"
         android:background="@drawable/all_button_background"
-        android:text="호실 등록"
+        android:text="로그인"
         android:textColor="#FFFFFF"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_main_reward"
+        app:layout_constraintBottom_toTopOf="@+id/button_login_register"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button_main_reward"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:id="@+id/button_login_register"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
         android:background="@drawable/all_button_background"
-        android:text="상벌점 부여"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="회원가입"
         android:textColor="#FFFFFF"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_main_notice"
+        app:layout_constraintBottom_toTopOf="@id/checkbox_login_autoLogin"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button_main_notice"
-        android:layout_width="120dp"
+    <CheckBox
+        android:id="@+id/checkbox_login_autoLogin"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
-        android:background="@drawable/all_button_background"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:text="공지 등록"
+        android:text="로그인 상태 유지"
+        android:textColor="#7E7E7E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
