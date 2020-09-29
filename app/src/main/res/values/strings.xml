@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ParcelNoticeManager</string>
+    <string name="kakao_app_key">3a5bc04c7ee08dc52a53956102c28aa9</string>
 </resources>
