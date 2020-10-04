@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         checkBoxAutoLogin = findViewById(R.id.checkbox_login_autoLogin);
         sessionCallBack = new SessionCallBack();
         Session.getCurrentSession().addCallback(sessionCallBack);
-        Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
+        //Session.getCurrentSession().checkAndImplicitOpen(); //자동로그인
 
         if(checkBoxAutoLogin.isChecked() == true){
             //자동로그인
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        if(Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
            super.onActivityResult(requestCode, resultCode, data);
            return;
@@ -120,10 +120,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(MeV2Response result) {
-                    // 로그인 성공~ 아이디 가져오자
+                    // 로그인 성공
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra("id",result.getKakaoAccount().getEmail());
+                    //intent.putExtra("id",result.getKakaoAccount().getEmail());
+                    //뭐 가져와야 하지..?
                     startActivity(intent);
+                    finish();
                 }
             });
         }
