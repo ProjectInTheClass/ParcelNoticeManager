@@ -10,21 +10,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RoomActivity"></activity>
-        <activity android:name=".NoticeActivity" />
-        <activity android:name=".RewardActivity" />
-        <activity android:name=".MainActivity" />
 
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key"/>
->>>>>>> 5ed20035b2e0f6fbcf96b8c2a36554be5d3297bb
-        <activity android:name=".LoginActivity">
+        <activity android:name=".RoomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".NoticeActivity"/>
+
+        <activity android:name=".RewardActivity"/>
+
+
+        <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key"/>
+        <activity android:name=".LoginActivity">
         </activity>
     </application>
 

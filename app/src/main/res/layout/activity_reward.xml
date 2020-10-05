@@ -112,6 +112,7 @@
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
     <Button
+        android:id="@+id/button_save_reward"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
