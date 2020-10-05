@@ -1,5 +1,6 @@
 package com.eos.parcelnoticemanager;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 

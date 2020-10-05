@@ -59,22 +59,22 @@
         android:id="@+id/view_login_underLine"
         android:layout_width="300dp"
         android:layout_height="3dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="40dp"
         android:background="#000000"
-        app:layout_constraintBottom_toTopOf="@id/imageView_main_mainImage"
+        app:layout_constraintBottom_toTopOf="@id/view_login_mainImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView_main_mainImage"
+    <View
+        android:id="@+id/view_login_mainImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@id/editText_login_school"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/app_main_image" />
+        android:background="@drawable/app_main_image" />
 
     <EditText
         android:id="@+id/editText_login_school"
@@ -127,7 +127,7 @@
         android:id="@+id/button_login_kakao"
         android:layout_width="298dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="113dp"
         android:background="@drawable/login_button_kakao"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
