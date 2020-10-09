@@ -6,13 +6,132 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <View
+        android:id="@+id/view_main_upLine"
+        android:layout_width="300dp"
+        android:layout_height="3dp"
+        android:layout_marginBottom="10dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/textView_main_appDescribe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
+        android:id="@+id/textView_main_appDescribe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:text="당신을 위한 기숙사 메이트"
+        app:layout_constraintBottom_toTopOf="@+id/textView_main_appName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_main_appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/monsori"
+        android:text="쑥메이트"
+        android:textColor="#14A534"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_main_version"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_main_version"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/all_button_background"
+        android:backgroundTint="#3DCC5B"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:gravity="center"
+        android:text="관리용"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/view_main_underLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    <View
+        android:id="@+id/view_main_underLine"
+        android:layout_width="300dp"
+        android:layout_height="3dp"
+        android:layout_marginBottom="40dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/view_main_mainImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/view_main_mainImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@id/button_main_parcel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/app_main_image" />
+
+    <Button
+        android:id="@+id/button_main_parcel"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/all_button_background"
+        android:backgroundTint="#8DD891"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:text="택배 등록"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/button_main_room"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_main_room"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/all_button_background"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:text="호실 등록"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/button_main_reward"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_main_reward"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/all_button_background"
+        android:backgroundTint="#8DD891"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:text="상벌점 부여"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/button_main_notice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_main_notice"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/all_button_background"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:text="공지 등록"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
