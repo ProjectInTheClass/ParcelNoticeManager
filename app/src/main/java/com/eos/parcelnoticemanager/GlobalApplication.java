@@ -1,6 +1,9 @@
 package com.eos.parcelnoticemanager;
 
+<<<<<<< HEAD
 import android.app.Activity;
+=======
+>>>>>>> modified layout and add kakao login
 import android.app.Application;
 import android.content.Context;
 

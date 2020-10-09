@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         Session.getCurrentSession().addCallback(sessionCallBack);
         //Session.getCurrentSession().checkAndImplicitOpen();
 
+
         //자동로그인
         if(pref.getBoolean("autoLogin", false)){
             editTextSchool.setText(pref.getString("id",""));
