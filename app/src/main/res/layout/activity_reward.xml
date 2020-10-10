@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
-        app:title="공지 등록"
+        app:title="상벌점 등록"
         android:theme="@style/ToolbarTheme" />
 
 
