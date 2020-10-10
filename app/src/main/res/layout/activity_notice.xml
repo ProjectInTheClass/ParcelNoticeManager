@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NoticeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar_notice"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:title="공지 등록"
+        android:theme="@style/ToolbarTheme"/>
+
+    <EditText
+        android:id="@+id/editText_notice"
+        android:layout_width="350dp"
+        android:layout_height="326dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:hint="공지를 입력하세요"
+        android:gravity="top"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"/>
+
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorAccent"
+        android:shadowColor="#FFFFFF"
+        android:text="저장하기"
+        android:textColor="#000000"
+        android:textColorHighlight="#F4F6F6"
+        android:textColorHint="#009688"
+        android:textSize="18dp"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"/>
+
+</LinearLayout>
