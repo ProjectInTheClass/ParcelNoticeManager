@@ -25,7 +25,7 @@ import com.kakao.util.exception.KakaoException;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister, btnKakaoLogin;
-    private EditText editTextSchool, editTextPassword;
+    private EditText editTextID, editTextPassword;
     private CheckBox checkBoxAutoLogin;
     private SessionCallBack sessionCallBack;
     private Boolean loginCheck = false;
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.button_login_login);
         btnRegister = findViewById(R.id.button_login_register);
         btnKakaoLogin = findViewById(R.id.button_login_kakao);
-        editTextSchool = findViewById(R.id.editText_login_school);
+        editTextID = findViewById(R.id.editText_login_id);
         editTextPassword = findViewById(R.id.editText_login_password);
         checkBoxAutoLogin = findViewById(R.id.checkbox_login_autoLogin);
         sessionCallBack = new SessionCallBack();
@@ -48,14 +48,14 @@ public class LoginActivity extends AppCompatActivity {
         editor = pref.edit();
 
         Session.getCurrentSession().addCallback(sessionCallBack);
-        //Session.getCurrentSession().checkAndImplicitOpen();
+        Session.getCurrentSession().checkAndImplicitOpen();
 
 
         //자동로그인
         if(pref.getBoolean("autoLogin", false)){
-            editTextSchool.setText(pref.getString("id",""));
-            editTextPassword.setText(pref.getString("password",""));
-            checkBoxAutoLogin.setChecked(true);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("userID", pref.getString("id",""));
+            startActivity(intent);
         }
 
         btnKakaoLogin.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = editTextSchool.getText().toString();
+                String id = editTextID.getText().toString();
                 String password = editTextPassword.getText().toString();
 
                 //일치하는 회원이 있는지 확인
