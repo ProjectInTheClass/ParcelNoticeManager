@@ -11,25 +11,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".RoomActivity">
-
-        </activity>
-        <activity android:name=".NoticeActivity"/>
-
-        <activity android:name=".RewardActivity"/>
-
-
-        <activity android:name=".MainActivity" />
-
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".tools.RoomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+
+        <activity android:name=".tools.NoticeActivity"/>
+
+        <activity android:name=".tools.RewardActivity"/>
+
+
+        <activity android:name=".tools.MainActivity" />
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key"/>
+        <activity android:name=".tools.LoginActivity">
+
         </activity>
     </application>
 
