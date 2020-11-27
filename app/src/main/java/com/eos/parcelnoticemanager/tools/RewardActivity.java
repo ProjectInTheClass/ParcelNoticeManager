@@ -1,4 +1,4 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.tools;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.data.RewardData;
 
 public class RewardActivity extends AppCompatActivity {
 
@@ -52,7 +55,7 @@ public class RewardActivity extends AppCompatActivity {
 
     View.OnClickListener btnSaveListener = new View.OnClickListener(){
         public void onClick(View v){
-            RewardFileControl cotent = new RewardFileControl(ed_name.getText().toString());
+            RewardData cotent = new RewardData(ed_name.getText().toString());
             if(isPlus == true){
                 cotent.plusScore(Integer.parseInt(ed_score.getText().toString()), ed_reason.getText().toString());
             }

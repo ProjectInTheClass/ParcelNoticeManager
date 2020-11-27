@@ -1,9 +1,9 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.data;
 
 import android.view.View;
 import android.widget.EditText;
 
-class NoticeFileControl {
+public class NoticeData {
     String noticeData = "공지";
 
     public void saveNoticeData(String noticeData){

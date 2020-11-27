@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".tools.LoginActivity">
 
     <View
         android:id="@+id/view_login_upLine"
@@ -72,12 +72,12 @@
         android:layout_height="150dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/app_main_image"
-        app:layout_constraintBottom_toTopOf="@id/editText_login_school"
+        app:layout_constraintBottom_toTopOf="@id/editText_login_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText_login_school"
+        android:id="@+id/editText_login_id"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginBottom="3dp"
@@ -111,24 +111,13 @@
         android:id="@+id/button_login_login"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="70dp"
         android:background="@drawable/all_button_background"
         android:backgroundTint="#8DD891"
         android:text="로그인"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/button_login_kakao"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_login_kakao"
-        android:layout_width="298dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/login_button_kakao"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

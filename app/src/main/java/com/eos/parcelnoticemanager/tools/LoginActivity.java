@@ -1,4 +1,4 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.tools;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.custom_dialog.JoinDialog;
+import com.eos.parcelnoticemanager.data.TokenVO;
+import com.eos.parcelnoticemanager.retrofit.AuthApi;
 import com.kakao.auth.ApiErrorCode;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
@@ -22,13 +27,23 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.util.exception.KakaoException;
 
+import com.google.gson.JsonObject;
+
+import retrofit2.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister, btnKakaoLogin;
-    private EditText editTextSchool, editTextPassword;
+    private EditText etEmail, editTextPassword;
     private CheckBox checkBoxAutoLogin;
     private SessionCallBack sessionCallBack;
     private Boolean loginCheck = false;
+    private Retrofit retrofit;
     private SharedPreferences pref;
     SharedPreferences.Editor editor;
 
@@ -39,57 +54,56 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.button_login_login);
         btnRegister = findViewById(R.id.button_login_register);
-        btnKakaoLogin = findViewById(R.id.button_login_kakao);
-        editTextSchool = findViewById(R.id.editText_login_school);
+        etEmail = findViewById(R.id.editText_login_id);
         editTextPassword = findViewById(R.id.editText_login_password);
         checkBoxAutoLogin = findViewById(R.id.checkbox_login_autoLogin);
         sessionCallBack = new SessionCallBack();
         pref = getSharedPreferences("setting",0);
-        editor = pref.edit();
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://52.78.214.64:3000/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         Session.getCurrentSession().addCallback(sessionCallBack);
-        //Session.getCurrentSession().checkAndImplicitOpen();
+        Session.getCurrentSession().checkAndImplicitOpen();
 
 
         //자동로그인
         if(pref.getBoolean("autoLogin", false)){
-            editTextSchool.setText(pref.getString("id",""));
-            editTextPassword.setText(pref.getString("password",""));
-            checkBoxAutoLogin.setChecked(true);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("userID", pref.getString("id",""));
+            startActivity(intent);
         }
 
-        btnKakaoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
-            }
-        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = editTextSchool.getText().toString();
+                String email = etEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                //일치하는 회원이 있는지 확인
-                Boolean validation = loginValidation(id,password);
+                JsonObject json = new JsonObject();
+                json.addProperty("email", email);
+                json.addProperty("password", password);
+                retrofit.create(AuthApi.class).login(json).enqueue(new Callback<TokenVO>() {
 
-                //로그인 성공시
-                if(validation) {
-                    if(loginCheck){
-                        editor.putString("id",id);
-                        editor.putString("password",password);
-                        editor.putBoolean("autoLogin",true);
-                        editor.commit();
+                    @Override
+                    public void onResponse(Call<TokenVO> call, Response<TokenVO> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(LoginActivity.this,response.message().toString(),Toast.LENGTH_SHORT).show();
+                            editor.putString("token", response.body().getToken());
+                            editor.apply();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(LoginActivity.this,response.message().toString(),Toast.LENGTH_LONG).show();
+                        }
                     }
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("userID", id);
-                    startActivity(intent);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        Toast.makeText(LoginActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
 
@@ -107,20 +121,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-/*        btnRegister.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //회원가입
+                JoinDialog joinDialog = new JoinDialog(LoginActivity.this);
+                joinDialog.setCanceledOnTouchOutside(true);
+                joinDialog.setCancelable(true);
+                joinDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                joinDialog.show();
             }
-        });*/
+        });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-       if(Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
-           super.onActivityResult(requestCode, resultCode, data);
-           return;
-       }
+        if(Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
     }
 
     @Override
@@ -129,12 +146,7 @@ public class LoginActivity extends AppCompatActivity {
         Session.getCurrentSession().removeCallback(sessionCallBack);
     }
 
-    private boolean loginValidation(String id, String password){
-        //구현하기
-        return true;
-    }
-
-    private class SessionCallBack implements ISessionCallback{
+    private class SessionCallBack implements ISessionCallback {
         @Override
         public void onSessionOpened() {
             UserManagement.getInstance().me(new MeV2ResponseCallback() {
@@ -161,9 +173,10 @@ public class LoginActivity extends AppCompatActivity {
                 public void onSuccess(MeV2Response result) {
                     // 로그인 성공
 
-                    //처음 로그인 하는 계정인 경우 ->회원가입 (서버에 같은 id가 있는지 찾아보기)
+                    //처음 로그인하는 계정인 경우 ->회원가입
 
-                    //처음 로그인 하는 게 아닌 경우
+
+                    //처음 로그인하는 게 아닌 경우
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     intent.putExtra("userID", result.getId());
                     startActivity(intent);
@@ -177,3 +190,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
+

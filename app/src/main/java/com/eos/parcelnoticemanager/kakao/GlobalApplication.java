@@ -1,12 +1,8 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.kakao;
 
-
-import android.app.Activity;
 
 import android.app.Application;
 import android.content.Context;
-
-import androidx.annotation.Nullable;
 
 import com.kakao.auth.ApprovalType;
 import com.kakao.auth.AuthType;

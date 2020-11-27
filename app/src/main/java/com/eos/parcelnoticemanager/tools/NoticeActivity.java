@@ -1,4 +1,4 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.tools;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,9 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.data.NoticeData;
+
 public class NoticeActivity extends AppCompatActivity {
 
-    NoticeFileControl cotent = new NoticeFileControl();
+    NoticeData cotent = new NoticeData();
     private Button btn_save;
     private EditText et_notice;
 
@@ -28,14 +31,14 @@ public class NoticeActivity extends AppCompatActivity {
         et_notice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //et_notice.setText(cotent.getNoticeData());
+                et_notice.setText(cotent.getNoticeData());
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                //et_notice.setText(editable.toString());
+                et_notice.setText(editable.toString());
 
             }
         });

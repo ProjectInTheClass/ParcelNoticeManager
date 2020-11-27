@@ -1,8 +1,10 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.tools;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.eos.parcelnoticemanager.R;
 
 public class ParcelRegisterActivity extends AppCompatActivity {
 
