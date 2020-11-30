@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.eos.parcelnoticemanager.R;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnParcelRegister, btnRoomRegister, btnRewardRegister, btnNoticeRegister;
+    private Button btnParcelRegister, btnRoomRegister, btnRewardRegister, btnNoticeRegister, btnWasherRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         btnRoomRegister = findViewById(R.id.button_main_room);
         btnRewardRegister = findViewById(R.id.button_main_reward);
         btnNoticeRegister = findViewById(R.id.button_main_notice);
+        btnWasherRegister = findViewById(R.id.button_main_washer);
 
         btnParcelRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnWasherRegister.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WasherActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnRewardRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         btnNoticeRegister.setOnClickListener(new View.OnClickListener() {
             @Override
