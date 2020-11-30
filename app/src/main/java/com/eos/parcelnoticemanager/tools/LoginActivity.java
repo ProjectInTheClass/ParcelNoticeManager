@@ -39,11 +39,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister, btnKakaoLogin;
-<<<<<<< HEAD:app/src/main/java/com/eos/parcelnoticemanager/LoginActivity.java
-    private EditText editTextID, editTextPassword;
-=======
-    private EditText etEmail, editTextPassword;
->>>>>>> jbok6825:app/src/main/java/com/eos/parcelnoticemanager/tools/LoginActivity.java
+    private EditText editTextID, editTextPassword, etEmail;
+
     private CheckBox checkBoxAutoLogin;
     private SessionCallBack sessionCallBack;
     private Boolean loginCheck = false;
@@ -58,12 +55,10 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.button_login_login);
         btnRegister = findViewById(R.id.button_login_register);
-<<<<<<< HEAD:app/src/main/java/com/eos/parcelnoticemanager/LoginActivity.java
         btnKakaoLogin = findViewById(R.id.button_login_kakao);
         editTextID = findViewById(R.id.editText_login_id);
-=======
+
         etEmail = findViewById(R.id.editText_login_id);
->>>>>>> jbok6825:app/src/main/java/com/eos/parcelnoticemanager/tools/LoginActivity.java
         editTextPassword = findViewById(R.id.editText_login_password);
         checkBoxAutoLogin = findViewById(R.id.checkbox_login_autoLogin);
         sessionCallBack = new SessionCallBack();
@@ -88,11 +83,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD:app/src/main/java/com/eos/parcelnoticemanager/LoginActivity.java
                 String id = editTextID.getText().toString();
-=======
                 String email = etEmail.getText().toString();
->>>>>>> jbok6825:app/src/main/java/com/eos/parcelnoticemanager/tools/LoginActivity.java
                 String password = editTextPassword.getText().toString();
 
                 JsonObject json = new JsonObject();
