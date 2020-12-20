@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tools.WasherActivity"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar_washer"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        app:title="세탁기 등록"
+        android:theme="@style/ToolbarTheme" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWasherFloor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
