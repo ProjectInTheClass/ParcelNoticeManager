@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -64,13 +65,15 @@ public class LoginActivity extends AppCompatActivity {
         sessionCallBack = new SessionCallBack();
         pref = getSharedPreferences("setting",0);
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://52.78.214.64:3000/v1/")
+                .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         Session.getCurrentSession().addCallback(sessionCallBack);
         Session.getCurrentSession().checkAndImplicitOpen();
 
+        pref = this.getSharedPreferences("token", this.MODE_PRIVATE);
+        editor = pref.edit();
 
         //자동로그인
         if(pref.getBoolean("autoLogin", false)){
@@ -90,12 +93,15 @@ public class LoginActivity extends AppCompatActivity {
                 JsonObject json = new JsonObject();
                 json.addProperty("email", email);
                 json.addProperty("password", password);
-                retrofit.create(AuthApi.class).login(json).enqueue(new Callback<TokenVO>() {
+
+                Call<TokenVO> call = retrofit.create(AuthApi.class).login(json);
+                call.enqueue(new Callback<TokenVO>() {
 
                     @Override
                     public void onResponse(Call<TokenVO> call, Response<TokenVO> response) {
                         if(response.isSuccessful()){
-                            Toast.makeText(LoginActivity.this,response.message().toString(),Toast.LENGTH_SHORT).show();
+                            Log.d("onResponse: ", response.body().getToken());
+                            Toast.makeText(LoginActivity.this,response.message(),Toast.LENGTH_SHORT).show();
                             editor.putString("token", response.body().getToken());
                             editor.apply();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -106,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call call, Throwable t) {
+                        Log.e( "onFailure: ",t.getMessage() );
                         Toast.makeText(LoginActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
                     }
                 });
