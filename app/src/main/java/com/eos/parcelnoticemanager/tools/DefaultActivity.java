@@ -16,8 +16,9 @@ public class DefaultActivity extends AppCompatActivity {
             toast = Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT);
             toast.show();
         }else{
-            finish();
             toast.cancel();
-        }
+            moveTaskToBack(true);
+            finish();
+            android.os.Process.killProcess(android.os.Process.myPid());        }
     }
 }
