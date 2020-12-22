@@ -1,11 +1,11 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.data;
 
-class RewardFileControl {
+public class RewardData {
     String name;
     int score;
     String reason;
 
-    public RewardFileControl(String name){
+    public RewardData(String name){
         this.name = name;
     }
 

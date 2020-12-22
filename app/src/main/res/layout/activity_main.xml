@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".tools.MainActivity">
 
 
     <View
@@ -103,23 +103,37 @@
         android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:text="호실 등록"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@id/button_main_reward"
+        app:layout_constraintBottom_toTopOf="@id/button_main_washer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button_main_reward"
+        android:id="@+id/button_main_washer"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
         android:background="@drawable/all_button_background"
         android:backgroundTint="#8DD891"
         android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:text="세탁기 등록"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/button_main_reward"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/button_main_reward"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/all_button_background"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:text="상벌점 부여"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@id/button_main_notice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
     <Button
         android:id="@+id/button_main_notice"
@@ -128,6 +142,7 @@
         android:layout_marginBottom="40dp"
         android:background="@drawable/all_button_background"
         android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:backgroundTint="#8DD891"
         android:text="공지 등록"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"

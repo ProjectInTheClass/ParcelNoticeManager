@@ -1,4 +1,4 @@
-package com.eos.parcelnoticemanager;
+package com.eos.parcelnoticemanager.tools;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.eos.parcelnoticemanager.R;
+
 public class MainActivity extends AppCompatActivity {
-    private Button btnParcelRegister, btnRoomRegister, btnRewardRegister, btnNoticeRegister;
+    private Button btnParcelRegister, btnRoomRegister, btnRewardRegister, btnNoticeRegister, btnWasherRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
         btnRoomRegister = findViewById(R.id.button_main_room);
         btnRewardRegister = findViewById(R.id.button_main_reward);
         btnNoticeRegister = findViewById(R.id.button_main_notice);
+        btnWasherRegister = findViewById(R.id.button_main_washer);
 
-        /*btnParcelRegister.setOnClickListener(new View.OnClickListener() {
+        btnParcelRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ParcelRegisterActivity.class);
@@ -30,7 +33,15 @@ public class MainActivity extends AppCompatActivity {
         btnRoomRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RoomRegisterActivity.class);
+                Intent intent = new Intent(MainActivity.this, RoomActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnWasherRegister.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WasherActivity.class);
                 startActivity(intent);
             }
         });
@@ -38,17 +49,18 @@ public class MainActivity extends AppCompatActivity {
         btnRewardRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RewardRegisterActivity.class);
+                Intent intent = new Intent(MainActivity.this, RewardActivity.class);
                 startActivity(intent);
             }
         });
 
+
         btnNoticeRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NoticeRegisterActivity.class);
+                Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 }

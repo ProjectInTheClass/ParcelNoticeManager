@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">ParcelNoticeManager</string>
     <string name="kakao_app_key">3a5bc04c7ee08dc52a53956102c28aa9</string>
+    <string name="parcel_confirm_toolbar">택배 확인</string>
+    <string name="laundry_confirmt_toolbar">세탁실 확인</string>
+    <string name="base_url"> http://3.112.201.89:3000/v3/</string>
+    <string name="local_test_url"> http://10.0.2.2:3000/v3/</string>
+    <string name="register">회원가입</string>
+    <string name="email_address">이메일 주소</string>
+    <string name="password">비밀번호</string>
+    <string name="name">이름</string>
 </resources>

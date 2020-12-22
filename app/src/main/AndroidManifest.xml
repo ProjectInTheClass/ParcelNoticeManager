@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.eos.parcelnoticemanager">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".kakao.GlobalApplication"
         android:allowBackup="true"
@@ -9,25 +11,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".RoomActivity">
+        <activity android:name=".tools.WasherActivity">
+        </activity>
+        <activity android:name=".tools.RoomActivity">
 
         </activity>
-        <activity android:name=".NoticeActivity"/>
-
-        <activity android:name=".RewardActivity"/>
-
-
-        <activity android:name=".MainActivity" />
+        <activity android:name=".tools.NoticeActivity" />
+        <activity android:name=".tools.RewardActivity" />
+        <activity android:name=".tools.MainActivity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key"/>
-        <activity android:name=".LoginActivity">
+            android:value="@string/kakao_app_key" />
+
+        <activity android:name=".tools.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
