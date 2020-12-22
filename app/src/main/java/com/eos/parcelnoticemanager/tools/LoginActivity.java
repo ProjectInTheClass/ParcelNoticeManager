@@ -49,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences pref;
     SharedPreferences.Editor editor;
 
+    private Toast toast;
+    private long backKeyPressedTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,6 +202,19 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
             Toast.makeText(getApplicationContext(),"로그인 도중 오류가 발생했습니다. 인터넷 연결을 확인해주세요: "+ exception.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis()> backKeyPressedTime + 2000){
+            backKeyPressedTime = System.currentTimeMillis();
+            toast = Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }else{
+            finish();
+            toast.cancel();
         }
     }
 }
