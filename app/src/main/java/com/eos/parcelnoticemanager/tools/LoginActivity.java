@@ -1,7 +1,5 @@
 package com.eos.parcelnoticemanager.tools;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,7 +17,6 @@ import com.eos.parcelnoticemanager.custom_dialog.JoinDialog;
 import com.eos.parcelnoticemanager.data.TokenVO;
 import com.eos.parcelnoticemanager.retrofit.AuthApi;
 import com.kakao.auth.ApiErrorCode;
-import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -34,20 +31,18 @@ import retrofit2.Retrofit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends DefaultActivity {
     private Button btnLogin, btnRegister, btnKakaoLogin;
     private EditText editTextID, editTextPassword, etEmail;
 
     private CheckBox checkBoxAutoLogin;
     private SessionCallBack sessionCallBack;
-    private Boolean loginCheck = false;
     private Retrofit retrofit;
-    private SharedPreferences pref;
-    SharedPreferences.Editor editor;
+    private SharedPreferences settingPrefs, tokenPrefs;
+    SharedPreferences.Editor settingEditor, tokenEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,30 +53,26 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.button_login_register);
         btnKakaoLogin = findViewById(R.id.button_login_kakao);
         editTextID = findViewById(R.id.editText_login_id);
-
         etEmail = findViewById(R.id.editText_login_id);
         editTextPassword = findViewById(R.id.editText_login_password);
         checkBoxAutoLogin = findViewById(R.id.checkbox_login_autoLogin);
         sessionCallBack = new SessionCallBack();
-        pref = getSharedPreferences("setting",0);
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        setSharedPreferences();
+
         Session.getCurrentSession().addCallback(sessionCallBack);
         Session.getCurrentSession().checkAndImplicitOpen();
 
-        pref = this.getSharedPreferences("token", this.MODE_PRIVATE);
-        editor = pref.edit();
-
         //자동로그인
-        if(pref.getBoolean("autoLogin", false)){
+        if(isLogon()){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("userID", pref.getString("id",""));
             startActivity(intent);
         }
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                 String id = editTextID.getText().toString();
                 String email = etEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
-
                 JsonObject json = new JsonObject();
                 json.addProperty("email", email);
                 json.addProperty("password", password);
@@ -100,20 +90,24 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<TokenVO> call, Response<TokenVO> response) {
                         if(response.isSuccessful()){
-                            Log.d("onResponse: ", response.body().getToken());
                             Toast.makeText(LoginActivity.this,response.message(),Toast.LENGTH_SHORT).show();
-                            editor.putString("token", response.body().getToken());
-                            editor.apply();
+                            if(response.body() == null){
+                                Toast.makeText(LoginActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            tokenEditor.putString("token", response.body().getToken());
+                            tokenEditor.apply();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }else{
+                            showToast(response.message());
                             Toast.makeText(LoginActivity.this,response.message().toString(),Toast.LENGTH_LONG).show();
                         }
                     }
                     @Override
                     public void onFailure(Call call, Throwable t) {
                         Log.e( "onFailure: ",t.getMessage() );
-                        Toast.makeText(LoginActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
+                        showToast("알 수 없는 에러입니다. 개발자에게 문의하세요");
                     }
                 });
             }
@@ -123,13 +117,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    loginCheck = true;
+                    settingEditor.putBoolean("autoLogin", true);
                 }
                 else{
-                    loginCheck = false;
-                    editor.clear();
-                    editor.commit();
+                    settingEditor.putBoolean("autoLogin",false);
                 }
+                settingEditor.apply();
             }
         });
 
@@ -200,6 +193,20 @@ public class LoginActivity extends AppCompatActivity {
         public void onSessionOpenFailed(KakaoException exception) {
             Toast.makeText(getApplicationContext(),"로그인 도중 오류가 발생했습니다. 인터넷 연결을 확인해주세요: "+ exception.toString(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setSharedPreferences(){
+        settingPrefs = getSharedPreferences("setting",MODE_PRIVATE);
+        settingEditor = settingPrefs.edit();
+        tokenPrefs = getSharedPreferences("token", MODE_PRIVATE);
+        tokenEditor= tokenPrefs.edit();
+    }
+    private boolean isLogon(){
+        return settingPrefs.getBoolean("autoLogin", false) && tokenPrefs.getString("token", null)!= null;
+    }
+
+    private void showToast(String msg){
+        Toast.makeText(LoginActivity.this,msg,Toast.LENGTH_LONG).show();
     }
 }
 

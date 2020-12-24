@@ -1,21 +1,12 @@
 package com.eos.parcelnoticemanager.tools;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-
 import com.eos.parcelnoticemanager.R;
-import com.eos.parcelnoticemanager.custom_dialog.ParcelStudentListDialog;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DefaultActivity {
     private Button btnParcelRegister, btnRoomRegister, btnRewardRegister, btnNoticeRegister, btnWasherRegister;
 
 
