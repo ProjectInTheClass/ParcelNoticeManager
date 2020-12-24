@@ -21,7 +21,7 @@
         <activity android:name=".tools.NoticeActivity" />
         <activity android:name=".tools.RewardActivity" />
         <activity android:name=".tools.MainActivity" />
-
+        <activity android:name=".tools.ParcelRegisterActivity" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
