@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.data.RoomData;
-import com.eos.parcelnoticemanager.data.StudentData;
-import com.eos.parcelnoticemanager.tools.MainActivity;
+import com.eos.parcelnoticemanager.data.UserData;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class ParcelStudentListDialog extends Dialog {
     private Context context;
     private RoomData room;
     private RecyclerView rvStudent;
-    private ArrayList<StudentData> students_;
+    private ArrayList<UserData> students_;
 
     public ParcelStudentListDialog(@NonNull Context context, RoomData room) {
         super(context);
@@ -41,29 +40,22 @@ public class ParcelStudentListDialog extends Dialog {
         setContentView(R.layout.parcel_receiver_dialog);
 
         //roomNum으로 해당 호실의 학생 정보 받아옴
-        students_ = new ArrayList<>();
-        students_.add(new StudentData("서시언"));
-        students_.add(new StudentData("장보경"));
-        students_.add(new StudentData("고세진"));
-        students_.add(new StudentData("김현수"));
-        students_.add(new StudentData("주영환"));
-        students_.add(new StudentData("기타(직접입력)"));
 
 
         rvStudent = findViewById(R.id.parcel_recyclerView_students);
-        StudentAdapter adapter = new StudentAdapter(students_);
+        //StudentAdapter adapter = new StudentAdapter();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         rvStudent.setLayoutManager(manager);
-        rvStudent.setAdapter(adapter);
+       // rvStudent.setAdapter(adapter);
 
     }
 
     public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CustomViewHolder> {
 
-        ArrayList<StudentData> students;
+        ArrayList<UserData> students;
         private LayoutInflater inflater;
 
-        StudentAdapter(ArrayList<StudentData> students){
+        StudentAdapter(ArrayList<UserData> students){
             this.students = students;
             this.inflater = LayoutInflater.from(context);
         }
@@ -78,7 +70,7 @@ public class ParcelStudentListDialog extends Dialog {
 
         @Override
         public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-            StudentData student = students.get(position);
+            UserData student = students.get(position);
             if(student.getName().equals("기타(직접입력)")){
                 holder.tvStudentName.setTextSize(16);
             }
@@ -93,7 +85,7 @@ public class ParcelStudentListDialog extends Dialog {
         public class CustomViewHolder extends RecyclerView.ViewHolder {
             public TextView tvStudentName;
 
-            public CustomViewHolder(View itemView) {
+            public CustomViewHolder(final View itemView) {
                 super(itemView);
                 tvStudentName = (TextView)itemView.findViewById(R.id.parcel_textView_studentName);
 
@@ -101,9 +93,9 @@ public class ParcelStudentListDialog extends Dialog {
                     @Override
                     public void onClick(View v) {
                         if(tvStudentName.getText().toString().equals("기타(직접입력)")){
-                            ParcelDetailDialog.setReceiver(null);
+                            ParcelDetailDialog.setReceiver(-1,null);
                         }
-                        else ParcelDetailDialog.setReceiver(tvStudentName.getText().toString());
+                        else ParcelDetailDialog.setReceiver(students.get(getAdapterPosition()).getId(),tvStudentName.getText().toString());
 
                         ParcelDetailDialog parcelDetailDialog = new ParcelDetailDialog(context);
                         parcelDetailDialog.setCanceledOnTouchOutside(true);

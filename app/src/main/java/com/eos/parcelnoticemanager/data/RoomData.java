@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class RoomData {
     int id;
-    public int roomNum;
+    int roomNum;
+    int floor;
+    int dormitory;
 
     public int getRoomNum() {
         return roomNum;

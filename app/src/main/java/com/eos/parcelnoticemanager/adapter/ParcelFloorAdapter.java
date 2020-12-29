@@ -1,4 +1,4 @@
-package com.eos.parcelnoticemanager.tools;
+package com.eos.parcelnoticemanager.adapter;
 
 
 import android.content.Context;
@@ -13,16 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.data.FloorData;
+import com.eos.parcelnoticemanager.tools.OnFloorItemClickListener;
 
 import java.util.ArrayList;
 
-public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnFloorItemClickListener  {
+public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnFloorItemClickListener {
 
     static public ArrayList<FloorData> floors;
     private Context context;
     private LayoutInflater layoutInflater;
 
-    ParcelFloorAdapter(ArrayList<FloorData> floors, Context context){
+    public ParcelFloorAdapter(ArrayList<FloorData> floors, Context context){
         this.floors = floors;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -36,7 +37,7 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((GridViewHolder)holder).rvRoom.setAdapter(new ParcelRoomAdapter(context, floors.get(position).rooms));
+        ((GridViewHolder)holder).rvRoom.setAdapter(new ParcelRoomAdapter(context));
         ((GridViewHolder)holder).rvRoom.setLayoutManager(new GridLayoutManager(context, 5));
         ((GridViewHolder)holder).rvRoom.setHasFixedSize(true);
         ((ParcelFloorAdapter.GridViewHolder)holder).tvFloorNum.setText(String.valueOf(floors.get(position).floorNum)+"층");

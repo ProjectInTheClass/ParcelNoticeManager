@@ -1,6 +1,6 @@
 package com.eos.parcelnoticemanager.data;
 
-public class StudentData {
+public class UserData {
     int id;
     String email;
     String password;
@@ -14,7 +14,7 @@ public class StudentData {
     int room;
     int dormitory;
 
-    public StudentData(String name){
+    public UserData(String name){
         this.name = name;
     }
 
@@ -25,4 +25,6 @@ public class StudentData {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getId(){return id;}
 }

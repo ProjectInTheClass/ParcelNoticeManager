@@ -37,6 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends DefaultActivity {
     private Button btnLogin, btnRegister, btnKakaoLogin;
     private EditText editTextID, editTextPassword, etEmail;
+    public static String token;
 
     private CheckBox checkBoxAutoLogin;
     private SessionCallBack sessionCallBack;
@@ -95,6 +96,7 @@ public class LoginActivity extends DefaultActivity {
                                 Toast.makeText(LoginActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
                                 return;
                             }
+                            token = response.body().getToken();
                             tokenEditor.putString("token", response.body().getToken());
                             tokenEditor.apply();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
