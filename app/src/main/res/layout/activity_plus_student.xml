@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fillViewport="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+    android:layout_height="match_parent"
+    tools:context=".tools.PlusStudentActivity"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar_plus_student"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <TextView
-            android:id="@+id/tv_room_title"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:fontFamily="@font/nexon_gothic_lv1_bold"
-            android:textSize="24dp"
-            android:text="학생관리"
-            android:gravity="center"
-            android:background="@color/colorAccent"
-            />
+        android:layout_gravity="center"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        app:title="학생등록"
+        android:theme="@style/ToolbarTheme" />
+
 
         <TextView
             android:id="@+id/tv_exist_student"
@@ -26,7 +24,6 @@
             android:text="현재 등록된 학생"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_below="@+id/tv_room_title"
             android:fontFamily="@font/nexon_gothic_lv1_bold"
             android:textSize="20dp"
             />
@@ -38,8 +35,8 @@
             android:layout_below="@id/tv_exist_student"
             />
 
-       <EditText
-            android:id="@+id/et_room_Studentname"
+        <EditText
+            android:id="@+id/et_room_studentname"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@+id/rv_exist_student"
@@ -81,6 +78,4 @@
 
                 android:textSize="24dp" />
         </LinearLayout>
-
-    </RelativeLayout>
-</ScrollView>
+</LinearLayout>

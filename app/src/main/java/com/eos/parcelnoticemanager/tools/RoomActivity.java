@@ -11,8 +11,15 @@ import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.adapter.FloorAdapter;
 import com.eos.parcelnoticemanager.data.FloorData;
 import com.eos.parcelnoticemanager.data.RoomData;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RoomActivity extends AppCompatActivity {
@@ -20,6 +27,8 @@ public class RoomActivity extends AppCompatActivity {
     private RecyclerView rvFloor;
     private FloorAdapter floorAdapter;
     public ArrayList<FloorData> globalfloors;
+    int totalFloor;
+    ArrayList<Integer> roomNum = new ArrayList<>();
 
 
     @Override
@@ -50,9 +59,6 @@ public class RoomActivity extends AppCompatActivity {
                 rvFloor.setAdapter(floorAdapter);
             }
         });
-
-
-
 
     }
 
@@ -85,6 +91,7 @@ public class RoomActivity extends AppCompatActivity {
         floors.add(floor2);
         return floors;
     }
+
 }
 
 
