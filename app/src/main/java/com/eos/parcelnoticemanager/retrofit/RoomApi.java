@@ -24,11 +24,9 @@ public interface RoomApi {
     Call update_user(@Header("token") String token, @Body JsonObject jsonObject);
 
     @GET("/sagam/room/getRoomsByFloor")
-    Call getRooms_byFloor(@Header("token") String toke, @Body JsonObject jsonObject);
+    Call<List<RoomData>> getRooms_byFloor(@Header("token") String toke, @Body JsonObject jsonObject);
 
     @GET("/sagam/room/users")
     Call<List<UserData>> get_users(@Header("token") String token, @Body JsonObject jsonObject);
-
-
 
 }

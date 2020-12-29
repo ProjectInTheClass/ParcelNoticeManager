@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.adapter.ParcelRoomAdapter;
 import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.UserData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ParcelStudentListDialog extends Dialog {
@@ -25,7 +27,7 @@ public class ParcelStudentListDialog extends Dialog {
     private Context context;
     private RoomData room;
     private RecyclerView rvStudent;
-    private ArrayList<UserData> students_;
+    private List<UserData> users;
 
     public ParcelStudentListDialog(@NonNull Context context, RoomData room) {
         super(context);
@@ -39,23 +41,22 @@ public class ParcelStudentListDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parcel_receiver_dialog);
 
-        //roomNum으로 해당 호실의 학생 정보 받아옴
-
+        users = ParcelRoomAdapter.getUsers(room.getRoomNum());
 
         rvStudent = findViewById(R.id.parcel_recyclerView_students);
-        //StudentAdapter adapter = new StudentAdapter();
+        StudentAdapter adapter = new StudentAdapter(users);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         rvStudent.setLayoutManager(manager);
-       // rvStudent.setAdapter(adapter);
+        rvStudent.setAdapter(adapter);
 
     }
 
     public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CustomViewHolder> {
 
-        ArrayList<UserData> students;
+        List<UserData> students;
         private LayoutInflater inflater;
 
-        StudentAdapter(ArrayList<UserData> students){
+        StudentAdapter(List<UserData> students){
             this.students = students;
             this.inflater = LayoutInflater.from(context);
         }
