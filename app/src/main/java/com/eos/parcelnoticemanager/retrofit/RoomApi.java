@@ -3,6 +3,7 @@ import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.UserData;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,7 +27,8 @@ public interface RoomApi {
     @GET("/sagam/room/getRoomsByFloor")
     Call<List<RoomData>> getRooms_byFloor(@Header("token") String toke, @Body JsonObject jsonObject);
 
+
     @GET("/sagam/room/users")
-    Call<List<UserData>> get_users(@Header("token") String token, @Body JsonObject jsonObject);
+    Call <List<UserData>> get_users(@Header("token") String token, @Body JsonObject jsonObject);
 
 }

@@ -13,5 +13,17 @@ public class RoomData {
         return roomNum;
 
     }
+
     public int getDormitory(){return dormitory;}
+
+    public void setRoomNum(int roomNum){
+        this.roomNum = roomNum;
+    }
+
+    public void setfloor(int roomNum){
+        this.floor = floor;
+    }
+    public void setDormitory(int dormitory){
+        this.dormitory = dormitory;
+    }
 }
