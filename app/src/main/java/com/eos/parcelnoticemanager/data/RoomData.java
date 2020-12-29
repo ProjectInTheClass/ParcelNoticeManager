@@ -11,4 +11,5 @@ public class RoomData {
     public int getRoomNum() {
         return roomNum;
     }
+    public int getDormitory(){return dormitory;}
 }

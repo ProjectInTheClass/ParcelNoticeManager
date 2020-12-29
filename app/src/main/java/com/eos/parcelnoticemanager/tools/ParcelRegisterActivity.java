@@ -26,7 +26,6 @@ public class ParcelRegisterActivity extends AppCompatActivity {
     static SharedPreferences pref;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,10 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.custom_dialog.ParcelDetailDialog;
 import com.eos.parcelnoticemanager.custom_dialog.ParcelStudentListDialog;
 import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.StudnetInRoomData;
 import com.eos.parcelnoticemanager.retrofit.RoomApi;
+import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +58,7 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         RoomData room = rooms.get(position);
-        holder.tvRoom.setText(String.valueOf(room.roomNum));
+        holder.tvRoom.setText(String.valueOf(room.getRoomNum()));
     }
 
     @Override
@@ -77,6 +79,8 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
                     if(pos!=RecyclerView.NO_POSITION) {
+                        ParcelDetailDialog.setDormitory(rooms.get(pos).getDormitory());
+                        ParcelDetailDialog.setRoomId(rooms.get(pos).getRoomNum());
                         ParcelStudentListDialog parcelStudentListDialog = new ParcelStudentListDialog(context,rooms.get(pos));
                         parcelStudentListDialog.setCanceledOnTouchOutside(true);
                         parcelStudentListDialog.setCancelable(true);
@@ -95,7 +99,7 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
                 .build()
                 .create(RoomApi.class);
 
-        callGetRooms = roomApi.get_rooms();
+        callGetRooms = roomApi.get_rooms(ParcelRegisterActivity.getToken());
     }
 
     void initCallback(){
