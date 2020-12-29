@@ -5,18 +5,12 @@ import java.util.ArrayList;
 
 public class RoomData {
     int id;
-    public int roomNum;
-    public ArrayList<StudnetInRoomData> students;
+    int roomNum;
+    int floor;
+    int dormitory;
 
-    public RoomData(){
-        students = new ArrayList<>();
-    }
-    public void AddStudent(String name, String number){
-        StudnetInRoomData student = new StudnetInRoomData(name, number);
-        students.add(student);
-    }
+    public int getRoomNum() {
+        return roomNum;
 
-    public void DeleteStudent(String name, String number){
-        students.remove(new StudnetInRoomData(name, number));
     }
 }

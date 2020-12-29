@@ -1,37 +1,33 @@
-package com.eos.parcelnoticemanager.tools;
+package com.eos.parcelnoticemanager.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.data.FloorData;
-import com.eos.parcelnoticemanager.data.RoomData;
-import com.eos.parcelnoticemanager.data.WasherFloorData;
+import com.eos.parcelnoticemanager.tools.OnFloorItemClickListener;
 
 import java.util.ArrayList;
 
 
-public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnWasherFloorItemClickListener {
+public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnFloorItemClickListener {
 
-    OnWasherFloorItemClickListener listener;
-    static public ArrayList<WasherFloorData> washerFloors;
+    OnFloorItemClickListener listener;
+    static public ArrayList<FloorData> floors;
     private Context context;
     private LayoutInflater layoutInflater;
     private OnItemClickListener mListener = null;
 
-    public WasherFloorAdapter(ArrayList<WasherFloorData> washerFloors, Context context) {
-        this.washerFloors = washerFloors;
+    public FloorAdapter(ArrayList<FloorData> floors, Context context) {
+        this.floors = floors;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -46,26 +42,21 @@ public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.single_washer_floor, parent, false);
+        View view = layoutInflater.inflate(R.layout.signle_floor, parent, false);
         return new GridViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((GridViewHolder)holder).recyclerView.setAdapter(new WasherAdpater(context,washerFloors.get(position).washers));
-        ((GridViewHolder)holder).recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+        ((GridViewHolder)holder).recyclerView.setAdapter(new RoomAdapter(context, floors.get(position).rooms));
+        ((GridViewHolder)holder).recyclerView.setLayoutManager(new GridLayoutManager(context, 5));
         ((GridViewHolder)holder).recyclerView.setHasFixedSize(true);
-        if(washerFloors.get(position).isWasher == true) {
-            ((GridViewHolder) holder).tvWasherFloorNum.setText(String.valueOf(washerFloors.get(position).floorNum)+"층 세탁기");
-        }
-        else{
-            ((GridViewHolder) holder).tvWasherFloorNum.setText(String.valueOf(washerFloors.get(position).floorNum)+"층 건조기");
-        }
+        ((GridViewHolder)holder).tvFloorNum.setText(String.valueOf(floors.get(position).floorNum));
     }
 
     @Override
     public int getItemCount() {
-        return washerFloors.size();
+        return floors.size();
     }
 
     @Override public void onItemClick(RecyclerView.ViewHolder holder, View view, int position) {
@@ -76,20 +67,20 @@ public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return washerFloors.get(position).id;
+        return floors.get(position).id;
     }
 
     public class GridViewHolder extends RecyclerView.ViewHolder {
         RecyclerView recyclerView;
-        TextView tvWasherFloorNum;
-        Button btnPlusWasher;
+        TextView tvFloorNum;
+        Button btnPlusRoom;
 
         public GridViewHolder(View itemView) {
             super(itemView);
-            recyclerView = itemView.findViewById(R.id.rvWasher);
-            tvWasherFloorNum = itemView.findViewById(R.id.tvWasherFloorNum);
-            btnPlusWasher = (Button)itemView.findViewById(R.id.btnPlusWahser);
-            btnPlusWasher.setOnClickListener(new View.OnClickListener(){
+            recyclerView = itemView.findViewById(R.id.rvRooms);
+            tvFloorNum = itemView.findViewById(R.id.tvFloorNum);
+            btnPlusRoom = (Button)itemView.findViewById(R.id.btnPlusRoom);
+            btnPlusRoom.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v)
                 {

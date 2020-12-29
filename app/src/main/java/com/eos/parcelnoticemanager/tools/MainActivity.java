@@ -1,17 +1,14 @@
 package com.eos.parcelnoticemanager.tools;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
 import com.eos.parcelnoticemanager.R;
 
 public class MainActivity extends DefaultActivity {
     private Button btnParcelRegister, btnRoomRegister, btnRewardRegister, btnNoticeRegister, btnWasherRegister;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +19,7 @@ public class MainActivity extends DefaultActivity {
         btnRewardRegister = findViewById(R.id.button_main_reward);
         btnNoticeRegister = findViewById(R.id.button_main_notice);
         btnWasherRegister = findViewById(R.id.button_main_washer);
+
 
         btnParcelRegister.setOnClickListener(new View.OnClickListener() {
             @Override

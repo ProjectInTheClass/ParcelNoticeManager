@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.adapter.WasherFloorAdapter;
 import com.eos.parcelnoticemanager.data.WasherFloorData;
 import com.eos.parcelnoticemanager.data.WasherData;
 

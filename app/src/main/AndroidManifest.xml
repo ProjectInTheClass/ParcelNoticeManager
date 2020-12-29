@@ -21,8 +21,12 @@
         <activity android:name=".tools.NoticeActivity" />
         <activity android:name=".tools.RewardActivity" />
         <activity android:name=".tools.MainActivity" />
+<<<<<<< HEAD
         <activity android:name=".tools.PlusStudentActivity"/>
 
+=======
+        <activity android:name=".tools.ParcelRegisterActivity" />
+>>>>>>> d0953471f29d2620152242c16dd4e1171d1f7eb0
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
