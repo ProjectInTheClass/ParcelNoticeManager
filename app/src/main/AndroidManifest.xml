@@ -21,6 +21,7 @@
         <activity android:name=".tools.NoticeActivity" />
         <activity android:name=".tools.RewardActivity" />
         <activity android:name=".tools.MainActivity" />
+        <activity android:name=".tools.PlusStudentActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -32,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

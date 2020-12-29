@@ -1,24 +1,26 @@
 package com.eos.parcelnoticemanager.data;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class StudnetInRoomData {
-    public int roomNum;
-    public ArrayList<String> studentNameList;
-    public ArrayList<String> studentNumberList;
+public class StudnetInRoomData implements Serializable {
+    String studentNum;
+    String studentName;
 
-    public StudnetInRoomData(int roomNum){
-        this.roomNum = roomNum;
-        studentNameList = new ArrayList<>();
-        studentNumberList = new ArrayList<>();
+    StudnetInRoomData(String name, String num){
+        studentName = name;
+        studentNum = num;
     }
 
-    public void addStudent(String name, String studentNumber){
-        studentNameList.add(name);
-        studentNumberList.add(studentNumber);
+    public String getStudentName() {
+        return studentName;
     }
-    public void deleteStudent(String name, String studentNumber){
-        studentNameList.remove(name);
-        studentNumberList.remove(studentNumber);
+
+    public String getStudentNum() {
+        return studentNum;
     }
 }
+
