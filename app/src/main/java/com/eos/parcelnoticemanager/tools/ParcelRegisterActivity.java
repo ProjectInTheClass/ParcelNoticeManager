@@ -24,12 +24,14 @@ public class ParcelRegisterActivity extends AppCompatActivity {
     RecyclerView rvFloor;
     ParcelFloorAdapter floorAdapter;
     static SharedPreferences pref;
+    static String baseUrl;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_parcel_register);
+        baseUrl = getString(R.string.base_url);
         pref = getSharedPreferences("token",0);
 
         rvFloor = findViewById(R.id.parcel_recyclerView_floor);
@@ -43,4 +45,5 @@ public class ParcelRegisterActivity extends AppCompatActivity {
     public static String getToken(){
         return pref.getString("token","");
     }
+    public static String getBaseUrl(){return baseUrl;}
 }

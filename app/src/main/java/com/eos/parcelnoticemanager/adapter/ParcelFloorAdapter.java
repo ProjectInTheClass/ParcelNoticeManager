@@ -35,14 +35,13 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     static public ArrayList<Integer> floors;
     private Context context;
     private LayoutInflater layoutInflater;
-    private DormitoryApi dormitoryApi;
     private DormitoryData dormitoryData;
     private Callback<DormitoryData> retrofitCallback;
     private Call<DormitoryData> callGetDormitory;
 
     public ParcelFloorAdapter(Context context){
-        initRetrofit();
         initCallback();
+        initRetrofit();
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         floors = new ArrayList<>();
@@ -75,17 +74,14 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void initRetrofit() {
-        dormitoryApi = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
+        callGetDormitory = new Retrofit.Builder()
+                .baseUrl(ParcelRegisterActivity.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(DormitoryApi.class);
-        callGetDormitory = dormitoryApi.get_dormitory(ParcelRegisterActivity.getToken());
+                .create(DormitoryApi.class)
+                .get_dormitory(ParcelRegisterActivity.getToken());
     }
 
-    private String getString(int base_url) {
-        return getString(base_url);
-    }
 
     void initCallback(){
         retrofitCallback = new Callback<DormitoryData>() {

@@ -73,14 +73,10 @@ public class ParcelDetailDialog extends Dialog {
 
     private void initRetrofit() {
         parcelApi = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
+                .baseUrl(ParcelRegisterActivity.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(ParcelApi.class);
-    }
-
-    private String getString(int base_url) {
-        return getString(base_url);
     }
 
     public static void setReceiver(int receiverId, String receiver) {

@@ -100,7 +100,7 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
     }
     void initRetrofit(){
         roomApi = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
+                .baseUrl(ParcelRegisterActivity.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(RoomApi.class);
@@ -141,10 +141,5 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
             }
         };
         return users;
-    }
-
-    private String getString(int base_url) {
-        return getString(base_url);
-
     }
 }
