@@ -26,7 +26,6 @@ public class ParcelRegisterActivity extends AppCompatActivity {
     static SharedPreferences pref;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +34,7 @@ public class ParcelRegisterActivity extends AppCompatActivity {
 
         rvFloor = findViewById(R.id.parcel_recyclerView_floor);
 
+        floorAdapter = new ParcelFloorAdapter(getApplicationContext());
         LinearLayoutManager manager = new LinearLayoutManager(ParcelRegisterActivity.this);
         rvFloor.setLayoutManager(manager);
         rvFloor.setAdapter(floorAdapter);

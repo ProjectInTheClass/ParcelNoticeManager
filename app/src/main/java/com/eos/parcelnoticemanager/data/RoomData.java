@@ -16,6 +16,8 @@ public class RoomData {
 
     }
 
+    public int getDormitory(){return dormitory;}
+
     public void setRoomNum(int roomNum){
         this.roomNum = roomNum;
     }
