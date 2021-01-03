@@ -46,7 +46,7 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         floors = new ArrayList<>();
-        for(int i=0; i<dormitoryData.getFloor(); i++){
+        for(int i=0; i<dormitoryData.getStory(); i++){
             floors.add(i+1);
         }
     }

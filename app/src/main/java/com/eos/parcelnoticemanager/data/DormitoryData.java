@@ -1,8 +1,10 @@
 package com.eos.parcelnoticemanager.data;
 
 public class DormitoryData {
-    int dormitory;
-    int floor;
+    int id;
+    String name;
+    int story;
+    String dormitoryCode;
 
-    public int getFloor(){return floor;}
+    public int getStory(){return story;}
 }
