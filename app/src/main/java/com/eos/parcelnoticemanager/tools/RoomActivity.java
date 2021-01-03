@@ -39,6 +39,7 @@ public class RoomActivity extends AppCompatActivity {
     int totalFloor;
     ArrayList<Integer> roomNum = new ArrayList<>();
     private RoomApi roomApi;
+    int i;
 
 
     @Override
@@ -102,8 +103,6 @@ public class RoomActivity extends AppCompatActivity {
 
     private void init(){
         totalFloor = 5;
-        ArrayList<FloorData> floors = new ArrayList<FloorData>();
-
 
         roomApi = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
@@ -114,17 +113,18 @@ public class RoomActivity extends AppCompatActivity {
         for(int i = 0; i<totalFloor; i++) {
             FloorData temp = new FloorData();
             temp.setFloorNum(i + 1);
-            floors.add(temp);
+            globalfloors.add(temp);
         }
 
-        for(int i = 0; i<totalFloor; i++){
+        for(i = 0; i<totalFloor; i++){
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("floor",i+1);
             Call <ArrayList<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(), jsonObject);
             Callback<ArrayList<RoomData>> callback = new Callback<ArrayList<RoomData>>() {
                 @Override
-                public void onResponse(Call<ArrayList<RoomData>> call, Response<ArrayList<RoomData>> response) {}
-
+                public void onResponse(Call<ArrayList<RoomData>> call, Response<ArrayList<RoomData>> response) {
+                    globalfloors.get(i).setRooms(response.body());
+                }
                 @Override
                 public void onFailure(Call<ArrayList<RoomData>> call, Throwable t) {
                     Toast.makeText(RoomActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
@@ -132,35 +132,6 @@ public class RoomActivity extends AppCompatActivity {
                 }
             };
             callRoomListByFloor.enqueue(callback);
-
-            for(int i = 0; i< cal)
-
-            @POST("/sagam/room/add")
-            Call add_room(@Header("token") String token, @Body JsonObject jsonObject);
-
-            @PUT("/sagam/room/updateUser")
-            Call update_user(@Header("token") String token, @Body JsonObject jsonObject);
-
-            @GET("/sagam/room/getRoomsByFloor")
-            Call <List<RoomData>>getRooms_byFloor(@Header("token") String toke, @Body JsonObject jsonObject);
-
-            @GET("/sagam/room/users")
-            Call <List<UserData>> get_users(@Header("token") String token, @Body JsonObject jsonObject);
-
-            Call<ArrayList<LaundryData>> callLaundryList = laundryApi.get_laundry_list(jsonObject);
-            Callback<ArrayList<LaundryData>> callback = new Callback<ArrayList<LaundryData>>() {
-                @Override
-                public void onResponse(Call<ArrayList<LaundryData>> call, Response<ArrayList<LaundryData>> response) {
-                    laundryAdapters.add(new LaundryAdapter(response.body()));
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<LaundryData>> call, Throwable t) {
-                    Toast.makeText(LaundryConfirmActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
-
-                }
-            };
-            callLaundryList.enqueue(callback);
         }
     }
 }

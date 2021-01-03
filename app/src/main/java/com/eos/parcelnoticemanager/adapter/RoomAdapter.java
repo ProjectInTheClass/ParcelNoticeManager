@@ -1,11 +1,8 @@
 package com.eos.parcelnoticemanager.adapter;
 
 import android.content.Context;
-<<<<<<< HEAD:app/src/main/java/com/eos/parcelnoticemanager/tools/RoomAdapter.java
 import android.content.Intent;
 import android.os.Bundle;
-=======
->>>>>>> d0953471f29d2620152242c16dd4e1171d1f7eb0:app/src/main/java/com/eos/parcelnoticemanager/adapter/RoomAdapter.java
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
-<<<<<<< HEAD:app/src/main/java/com/eos/parcelnoticemanager/tools/RoomAdapter.java
-=======
-import com.eos.parcelnoticemanager.custom_dialog.RoomDialog;
->>>>>>> d0953471f29d2620152242c16dd4e1171d1f7eb0:app/src/main/java/com/eos/parcelnoticemanager/adapter/RoomAdapter.java
 import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.StudnetInRoomData;
+import com.eos.parcelnoticemanager.tools.PlusStudentActivity;
 
 import java.util.ArrayList;
 
@@ -47,7 +41,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         room = rooms.get(position);
-        holder.tvRoomNum.setText(String.valueOf(room.roomNum));
+        holder.tvRoomNum.setText(String.valueOf(room.getRoomNum()));
     }
 
 
@@ -69,7 +63,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), PlusStudentActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("studentList", room.students);
+                    bundle.putSerializable("roomNum", room.getRoomNum());
                     intent.putExtras(bundle);
                     context.startActivity(intent);
 

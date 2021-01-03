@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,9 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.data.FloorData;
+import com.eos.parcelnoticemanager.data.RoomData;
+import com.eos.parcelnoticemanager.retrofit.RoomApi;
 import com.eos.parcelnoticemanager.tools.OnFloorItemClickListener;
+import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
+import com.eos.parcelnoticemanager.tools.RoomActivity;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnFloorItemClickListener {
@@ -25,6 +37,7 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private LayoutInflater layoutInflater;
     private OnItemClickListener mListener = null;
+    RoomApi roomApi;
 
     public FloorAdapter(ArrayList<FloorData> floors, Context context) {
         this.floors = floors;
@@ -91,6 +104,36 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             mListener.onItemClick(v, pos);
                         }
 
+                    }
+                    roomApi = new Retrofit.Builder()
+                            .baseUrl(String.valueOf(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build()
+                            .create(RoomApi.class);
+
+                    JsonObject jsonObject = new JsonObject();
+
+                    Call
+
+
+
+
+                    for(i = 0; i<totalFloor; i++){
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty("floor",i+1);
+                        Call<ArrayList<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(), jsonObject);
+                        Callback<ArrayList<RoomData>> callback = new Callback<ArrayList<RoomData>>() {
+                            @Override
+                            public void onResponse(Call<ArrayList<RoomData>> call, Response<ArrayList<RoomData>> response) {
+                                globalfloors.get(i).setRooms(response.body());
+                            }
+                            @Override
+                            public void onFailure(Call<ArrayList<RoomData>> call, Throwable t) {
+                                Toast.makeText(RoomActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
+
+                            }
+                        };
+                        callRoomListByFloor.enqueue(callback);
                     }
                 }
 
