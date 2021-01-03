@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -30,19 +31,19 @@ public class RoomActivity extends AppCompatActivity {
 
     private RecyclerView rvFloor;
     private FloorAdapter floorAdapter;
-    public ArrayList<FloorData> globalfloors;
+    public ArrayList<FloorData> globalfloors = new ArrayList<>();
     int totalFloor;
     ArrayList<Integer> roomNum = new ArrayList<>();
     private RoomApi roomApi;
     int i;
+    static SharedPreferences pref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
-
-
+        pref = getSharedPreferences("token",0);
         init();
 
         rvFloor = findViewById(R.id.rvFloors);
@@ -98,7 +99,7 @@ public class RoomActivity extends AppCompatActivity {
     }*/
 
     private void init(){
-        totalFloor = 5;
+        totalFloor = 4;
 
         roomApi = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
@@ -115,7 +116,7 @@ public class RoomActivity extends AppCompatActivity {
         for(i = 0; i<totalFloor; i++){
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("floor",i+1);
-            Call<List<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(), jsonObject);
+            Call<List<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(getToken(), jsonObject);
             Callback<List<RoomData>> callback = new Callback<List<RoomData>>() {
                 @Override
                 public void onResponse(Call<List<RoomData>> call, Response<List<RoomData>> response) {
@@ -130,6 +131,9 @@ public class RoomActivity extends AppCompatActivity {
             };
             callRoomListByFloor.enqueue(callback);
         }
+    }
+    public static String getToken(){
+        return pref.getString("token","");
     }
 }
 
