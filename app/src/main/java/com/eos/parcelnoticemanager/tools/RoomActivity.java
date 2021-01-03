@@ -12,7 +12,6 @@ import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.adapter.FloorAdapter;
 import com.eos.parcelnoticemanager.data.FloorData;
 import com.eos.parcelnoticemanager.data.RoomData;
-import com.eos.parcelnoticemanager.data.UserData;
 import com.eos.parcelnoticemanager.retrofit.RoomApi;
 import com.google.gson.JsonObject;
 
@@ -24,11 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
+
 
 
 public class RoomActivity extends AppCompatActivity {
@@ -48,7 +43,7 @@ public class RoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room);
 
 
-        globalfloors = prepareData();
+        init();
 
         rvFloor = findViewById(R.id.rvFloors);
 
@@ -73,6 +68,7 @@ public class RoomActivity extends AppCompatActivity {
 
     }
 
+    /*
     private ArrayList<FloorData> prepareData() {
         ArrayList<FloorData> floors = new ArrayList<FloorData>();
 
@@ -99,7 +95,7 @@ public class RoomActivity extends AppCompatActivity {
 
         floors.add(floor2);
         return floors;
-    }
+    }*/
 
     private void init(){
         totalFloor = 5;
@@ -119,14 +115,15 @@ public class RoomActivity extends AppCompatActivity {
         for(i = 0; i<totalFloor; i++){
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("floor",i+1);
-            Call <ArrayList<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(), jsonObject);
-            Callback<ArrayList<RoomData>> callback = new Callback<ArrayList<RoomData>>() {
+            Call<List<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(), jsonObject);
+            Callback<List<RoomData>> callback = new Callback<List<RoomData>>() {
                 @Override
-                public void onResponse(Call<ArrayList<RoomData>> call, Response<ArrayList<RoomData>> response) {
-                    globalfloors.get(i).setRooms(response.body());
+                public void onResponse(Call<List<RoomData>> call, Response<List<RoomData>> response) {
+                    globalfloors.get(i).setRooms((ArrayList<RoomData>) response.body());
+                    globalfloors.get(i).finalRoomNum = globalfloors.get(i).rooms.size()+globalfloors.get(i).floorNum*100;
                 }
                 @Override
-                public void onFailure(Call<ArrayList<RoomData>> call, Throwable t) {
+                public void onFailure(Call<List<RoomData>> call, Throwable t) {
                     Toast.makeText(RoomActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
 
                 }

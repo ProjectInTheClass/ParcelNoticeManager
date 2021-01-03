@@ -30,7 +30,7 @@ public class ParcelRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_parcel_register);
-        pref = getSharedPreferences("setting",0);
+        pref = getSharedPreferences("token",0);
 
         rvFloor = findViewById(R.id.parcel_recyclerView_floor);
 

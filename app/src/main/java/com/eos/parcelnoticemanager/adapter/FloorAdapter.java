@@ -113,6 +113,7 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                     JsonObject jsonObject = new JsonObject();
 
+                    /*
                     Call
 
 
@@ -134,10 +135,16 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             }
                         };
                         callRoomListByFloor.enqueue(callback);
-                    }
+
+
+                    }*/
                 }
 
+
+
             });
+
+
         }
     }
 }
