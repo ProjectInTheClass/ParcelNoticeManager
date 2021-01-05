@@ -38,8 +38,6 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
     private static Context context;
     private List<RoomData> rooms;
     private LayoutInflater inflater;
-    private Callback<List<RoomData>> retrofitCallback;
-    private Call<List<RoomData>> callGetRooms;
     private static RoomApi roomApi;
     private static List<UserData> users;
     private int floor;
@@ -47,10 +45,8 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
 
     public ParcelRoomAdapter(Context context, int floor) {
         this.floor = floor;
-        initCallback();
-        initRetrofit();
-        callGetRooms.enqueue(retrofitCallback);
         this.context = context;
+        init();
         this.inflater = LayoutInflater.from(context);
     }
     @NonNull
@@ -98,17 +94,16 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
 
         }
     }
-    void initRetrofit(){
+    void init(){
         roomApi = new Retrofit.Builder()
                 .baseUrl(ParcelRegisterActivity.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(RoomApi.class);
-        callGetRooms = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(),floor);
-    }
 
-    void initCallback(){
-        retrofitCallback = new Callback<List<RoomData>>() {
+        Call<List<RoomData>> callGetRooms = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(),floor);
+
+        callGetRooms.enqueue(new Callback<List<RoomData>>() {
             @Override
             public void onResponse(Call<List<RoomData>> call, Response<List<RoomData>> response) {
                 rooms = response.body();
@@ -118,14 +113,13 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
             public void onFailure(Call<List<RoomData>> call, Throwable t) {
                 Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
             }
-        };
+        });
 
     }
 
+
     public static List<UserData> getUsers(int roomId){
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("roomId",roomId);
-        Call<List<UserData>> callGetUsers = roomApi.get_users(ParcelRegisterActivity.getToken(),jsonObject);
+        Call<List<UserData>> callGetUsers = roomApi.get_users(ParcelRegisterActivity.getToken(),roomId);
         Callback<List<UserData>> callback = new Callback<List<UserData>>() {
             @Override
             public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {

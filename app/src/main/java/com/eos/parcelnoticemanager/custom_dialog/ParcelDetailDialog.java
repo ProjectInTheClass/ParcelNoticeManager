@@ -35,7 +35,7 @@ public class ParcelDetailDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parcel_detail_dialog);
-        initRetrofit();
+        init();
         btnConfirm = findViewById(R.id.parcel_detail_dialog_ok_button);
         btnCancel = findViewById(R.id.parcel_detail_dialog_cancel_button);
         etSender = findViewById(R.id.parcel_detail_dialog_sender_editText);
@@ -71,7 +71,7 @@ public class ParcelDetailDialog extends Dialog {
 
     }
 
-    private void initRetrofit() {
+    private void init() {
         parcelApi = new Retrofit.Builder()
                 .baseUrl(ParcelRegisterActivity.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())

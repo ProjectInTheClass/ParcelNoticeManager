@@ -30,6 +30,6 @@ public interface RoomApi {
     Call<List<RoomData>> getRooms_byFloor(@Header("token") String token, @Query("floor") int floor);
 
     @GET("/sagam/room/users")
-    Call <List<UserData>> get_users(@Header("token") String token, @Body JsonObject jsonObject);
+    Call <List<UserData>> get_users(@Header("token") String token, @Query("roomId") int roomId);
 
 }

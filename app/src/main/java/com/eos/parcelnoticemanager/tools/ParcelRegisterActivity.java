@@ -57,12 +57,11 @@ public class ParcelRegisterActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(DormitoryApi.class)
-                .get_dormitory(ParcelRegisterActivity.getToken());
+                .get_dormitory(getToken());
         callGetDormitory.enqueue(new Callback<DormitoryData>() {
             @Override
             public void onResponse(Call<DormitoryData> call, Response<DormitoryData> response) {
                 dormitoryData = response.body();
-                System.out.println(dormitoryData.getStory());
             }
 
             @Override
