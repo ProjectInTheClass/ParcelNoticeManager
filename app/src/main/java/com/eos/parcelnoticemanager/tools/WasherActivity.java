@@ -48,9 +48,6 @@ public class WasherActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     private ArrayList<WasherFloorData> prepareData() {

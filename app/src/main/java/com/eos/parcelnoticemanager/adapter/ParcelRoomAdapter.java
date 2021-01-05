@@ -107,7 +107,7 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("floor",floor);
-        callGetRooms = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(),jsonObject);
+        //callGetRooms = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(),jsonObject);
     }
 
     void initCallback(){
