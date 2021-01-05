@@ -6,7 +6,11 @@ public class FloorData {
     public int id;
     public int floorNum;
     public int finalRoomNum = floorNum*100;
-    public ArrayList<RoomData> rooms = new ArrayList<RoomData>();
+    public ArrayList<RoomData> rooms;
+
+    public FloorData(){
+        rooms = new ArrayList<RoomData>();
+    }
 
     public int getFloorNum() {
         return floorNum;
