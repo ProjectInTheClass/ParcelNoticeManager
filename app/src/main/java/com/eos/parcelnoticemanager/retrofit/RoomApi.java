@@ -17,19 +17,19 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RoomApi {
-    @GET("/sagam/room/")
+    @GET("sagam/room/")
     Call<List<RoomData>> get_rooms(@Header("token") String token);
 
-    @POST("/sagam/room/add")
+    @POST("sagam/room/add")
     Call add_room(@Header("token") String token, @Body JsonObject jsonObject);
 
-    @PUT("/sagam/room/updateUser")
+    @PUT("sagam/room/updateUser")
     Call update_user(@Header("token") String token, @Body JsonObject jsonObject);
 
-    @GET("/sagam/room/getRoomsByFloor")
+    @GET("sagam/room/getRoomsByFloor")
     Call<List<RoomData>> getRooms_byFloor(@Header("token") String token, @Query("floor") int floor);
 
-    @GET("/sagam/room/users")
+    @GET("sagam/room/users")
     Call <List<UserData>> get_users(@Header("token") String token, @Query("roomId") int roomId);
 
 }

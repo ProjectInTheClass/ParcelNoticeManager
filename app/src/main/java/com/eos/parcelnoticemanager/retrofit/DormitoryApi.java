@@ -10,7 +10,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface DormitoryApi {
-    @GET("/sagam/dormitory")
+    @GET("sagam/dormitory")
     Call<DormitoryData> get_dormitory(@Header("token") String token);
     @POST("sagam/dormitory/add")
     Call add_dormitory(@Header("token") String token, @Body JsonObject jsonObject);

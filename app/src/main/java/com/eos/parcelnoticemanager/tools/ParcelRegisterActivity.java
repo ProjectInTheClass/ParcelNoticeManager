@@ -6,19 +6,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Window;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.adapter.ParcelFloorAdapter;
 import com.eos.parcelnoticemanager.data.DormitoryData;
-import com.eos.parcelnoticemanager.data.FloorData;
-import com.eos.parcelnoticemanager.data.RoomData;
-import com.eos.parcelnoticemanager.data.UserData;
 import com.eos.parcelnoticemanager.retrofit.DormitoryApi;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +27,7 @@ public class ParcelRegisterActivity extends AppCompatActivity {
     static SharedPreferences pref;
     static String baseUrl;
     private DormitoryData dormitoryData;
+    private DormitoryApi dormitoryApi;
 
 
     @Override
@@ -43,32 +38,38 @@ public class ParcelRegisterActivity extends AppCompatActivity {
         pref = getSharedPreferences("token",0);
 
         init();
-        rvFloor = findViewById(R.id.parcel_recyclerView_floor);
 
-        floorAdapter = new ParcelFloorAdapter(getApplicationContext(),dormitoryData.getStory());
-        LinearLayoutManager manager = new LinearLayoutManager(ParcelRegisterActivity.this);
-        rvFloor.setLayoutManager(manager);
-        rvFloor.setAdapter(floorAdapter);
     }
 
     private void init() {
-        Call<DormitoryData> callGetDormitory = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(DormitoryApi.class)
-                .get_dormitory(getToken());
-        callGetDormitory.enqueue(new Callback<DormitoryData>() {
-            @Override
-            public void onResponse(Call<DormitoryData> call, Response<DormitoryData> response) {
-                dormitoryData = response.body();
-            }
 
-            @Override
-            public void onFailure(Call<DormitoryData> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
+         dormitoryApi = new Retrofit.Builder()
+                 .baseUrl(getString(R.string.base_url))
+                 .addConverterFactory(GsonConverterFactory.create())
+                 .build()
+                 .create(DormitoryApi.class);
+
+         Call<DormitoryData> callGetDormitory = dormitoryApi.get_dormitory(getToken());
+
+         Callback<DormitoryData> callback = new Callback<DormitoryData>() {
+             @Override
+             public void onResponse(Call<DormitoryData> call, Response<DormitoryData> response) {
+                 Log.d("sibal", "onResponse: ");
+                 dormitoryData = response.body();
+
+                 rvFloor = findViewById(R.id.parcel_recyclerView_floor);
+                 floorAdapter = new ParcelFloorAdapter(getApplicationContext(),dormitoryData.getStory());
+                 LinearLayoutManager manager = new LinearLayoutManager(ParcelRegisterActivity.this);
+                 rvFloor.setLayoutManager(manager);
+                 rvFloor.setAdapter(floorAdapter);
+             }
+
+             @Override
+             public void onFailure(Call<DormitoryData> call, Throwable t) {
+                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+             }
+         };
+        callGetDormitory.enqueue(callback);
     }
 
 

@@ -10,7 +10,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 
 import com.eos.parcelnoticemanager.R;
-import com.eos.parcelnoticemanager.retrofit.ParcelApi;
+import com.eos.parcelnoticemanager.retrofit.DormitoryApi;
 import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
 import com.google.gson.JsonObject;
 
@@ -25,7 +25,7 @@ public class ParcelDetailDialog extends Dialog {
     private static int receiverId;
     private static int roomId;
     private static int dormitoryId;
-    private ParcelApi parcelApi;
+//    private ParcelApi parcelApi;
 
     public ParcelDetailDialog(@NonNull Context context) {
         super(context);
@@ -35,7 +35,7 @@ public class ParcelDetailDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parcel_detail_dialog);
-        init();
+//        init();
         btnConfirm = findViewById(R.id.parcel_detail_dialog_ok_button);
         btnCancel = findViewById(R.id.parcel_detail_dialog_cancel_button);
         etSender = findViewById(R.id.parcel_detail_dialog_sender_editText);
@@ -58,7 +58,7 @@ public class ParcelDetailDialog extends Dialog {
                 jsonObject.addProperty("recipient",receiverId);
                 jsonObject.addProperty("room",roomId);
                 jsonObject.addProperty("dormitory",dormitoryId);
-                parcelApi.add_parcel(ParcelRegisterActivity.getToken(),jsonObject);
+//                parcelApi.add_parcel(ParcelRegisterActivity.getToken(),jsonObject);
                 dismiss();
             }
         }) ;
@@ -71,13 +71,13 @@ public class ParcelDetailDialog extends Dialog {
 
     }
 
-    private void init() {
-        parcelApi = new Retrofit.Builder()
-                .baseUrl(ParcelRegisterActivity.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ParcelApi.class);
-    }
+//    private void init() {
+//        parcelApi = new Retrofit.Builder()
+//                .baseUrl(ParcelRegisterActivity.getBaseUrl())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build()
+//                .create(DormitoryApi.class);
+//    }
 
     public static void setReceiver(int receiverId, String receiver) {
         ParcelDetailDialog.receiverId = receiverId;
