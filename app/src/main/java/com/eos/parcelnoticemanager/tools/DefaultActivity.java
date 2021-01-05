@@ -19,6 +19,6 @@ public class DefaultActivity extends AppCompatActivity {
             toast.cancel();
             moveTaskToBack(true);
             finish();
-            android.os.Process.killProcess(android.os.Process.myPid());        }
+            android.os.Process.killProcess(android.os.Process.myPid());}
     }
 }

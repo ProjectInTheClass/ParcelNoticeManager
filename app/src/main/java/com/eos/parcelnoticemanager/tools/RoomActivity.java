@@ -13,6 +13,8 @@ import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.adapter.FloorAdapter;
 import com.eos.parcelnoticemanager.data.FloorData;
 import com.eos.parcelnoticemanager.data.RoomData;
+import com.eos.parcelnoticemanager.data.TokenVO;
+import com.eos.parcelnoticemanager.retrofit.AuthApi;
 import com.eos.parcelnoticemanager.retrofit.RoomApi;
 import com.google.gson.JsonObject;
 
@@ -69,37 +71,8 @@ public class RoomActivity extends AppCompatActivity {
 
     }
 
-    /*
-    private ArrayList<FloorData> prepareData() {
-        ArrayList<FloorData> floors = new ArrayList<FloorData>();
-
-        //첫번째 subject 추가
-        FloorData floor1 = new FloorData();
-        floor1.setFloorNum(1);
-
-        RoomData room101 = new RoomData();
-        room101.setRoomNum(101);
-        room101.setfloor(1);
-
-        RoomData room102 = new RoomData();
-        room102.setRoomNum(102);
-        room102.setfloor(1);
-
-        floor1.finalRoomNum = 102;
-        floor1.rooms.add(room101);
-        floor1.rooms.add(room102);
-        floors.add(floor1);
-
-        FloorData floor2 = new FloorData();
-        floor2.setFloorNum(2);
-        floor2.finalRoomNum = 200;
-
-        floors.add(floor2);
-        return floors;
-    }*/
-
     private void init(){
-        totalFloor = 4;
+        totalFloor = 3;
 
         roomApi = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
@@ -114,13 +87,17 @@ public class RoomActivity extends AppCompatActivity {
         }
 
         for(i = 0; i<totalFloor; i++){
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("floor",i+1);
-            Call<List<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(getToken(), jsonObject);
+            /*JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("floor",i+1);*/
+
+            Call<List<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(getToken(), i+1);
             Callback<List<RoomData>> callback = new Callback<List<RoomData>>() {
                 @Override
                 public void onResponse(Call<List<RoomData>> call, Response<List<RoomData>> response) {
                     globalfloors.get(i).setRooms((ArrayList<RoomData>) response.body());
+                    for(int j = 0; j < globalfloors.size(); j++){
+                        System.out.println(globalfloors.get(i).getRooms().get(j));
+                    }
                     globalfloors.get(i).finalRoomNum = globalfloors.get(i).rooms.size()+globalfloors.get(i).floorNum*100;
                 }
                 @Override
