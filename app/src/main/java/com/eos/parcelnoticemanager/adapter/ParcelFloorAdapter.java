@@ -35,20 +35,16 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     static public ArrayList<Integer> floors;
     private Context context;
     private LayoutInflater layoutInflater;
-    private DormitoryData dormitoryData;
-    private Callback<DormitoryData> retrofitCallback;
-    private Call<DormitoryData> callGetDormitory;
 
-    public ParcelFloorAdapter(Context context){
-        initCallback();
-        initRetrofit();
+    public ParcelFloorAdapter(Context context, int floor){
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         floors = new ArrayList<>();
-        for(int i=0; i<dormitoryData.getStory(); i++){
+        for(int i=0; i<floor; i++){
             floors.add(i+1);
         }
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,30 +69,6 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onItemClick(RecyclerView.ViewHolder holder, View view, int position) {
     }
 
-    private void initRetrofit() {
-        callGetDormitory = new Retrofit.Builder()
-                .baseUrl(ParcelRegisterActivity.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(DormitoryApi.class)
-                .get_dormitory(ParcelRegisterActivity.getToken());
-    }
-
-
-    void initCallback(){
-        retrofitCallback = new Callback<DormitoryData>() {
-            @Override
-            public void onResponse(Call<DormitoryData> call, Response<DormitoryData> response) {
-                dormitoryData = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<DormitoryData> call, Throwable t) {
-                Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        };
-
-    }
 
     public class GridViewHolder extends RecyclerView.ViewHolder {
         RecyclerView rvRoom;

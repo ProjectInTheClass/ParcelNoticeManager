@@ -1,5 +1,6 @@
 package com.eos.parcelnoticemanager.data;
 
+
 public class DormitoryData {
     int id;
     String name;

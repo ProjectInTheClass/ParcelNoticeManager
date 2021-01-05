@@ -140,6 +140,7 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
                 Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
             }
         };
+        callGetUsers.enqueue(callback);
         return users;
     }
 }
