@@ -3,6 +3,7 @@ package com.eos.parcelnoticemanager.adapter;
 import android.bluetooth.BluetoothHidDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.StudnetInRoomData;
 import com.eos.parcelnoticemanager.data.UserData;
 import com.eos.parcelnoticemanager.retrofit.RoomApi;
+import com.eos.parcelnoticemanager.tools.OnFloorItemClickListener;
 import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
 import com.google.gson.JsonObject;
 import com.kakao.usermgmt.response.model.User;
@@ -34,19 +36,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.CustomViewHolder> {
-    private static Context context;
+public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.CustomViewHolder>{
+    private Context context;
     private List<RoomData> rooms;
     private LayoutInflater inflater;
-    private static RoomApi roomApi;
-    private static List<UserData> users;
     private int floor;
 
 
-    public ParcelRoomAdapter(Context context, int floor) {
+
+    public ParcelRoomAdapter(Context context, int floor, List<RoomData> rooms) {
         this.floor = floor;
         this.context = context;
-        init();
+        this.rooms = rooms;
         this.inflater = LayoutInflater.from(context);
     }
     @NonNull
@@ -63,75 +64,32 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
         holder.tvRoom.setText(String.valueOf(room.getRoomNum()));
     }
 
+
     @Override
     public int getItemCount() {
         return rooms.size();
     }
 
+
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         public TextView tvRoom;
 
-
-        public CustomViewHolder(View itemView) {
+        public CustomViewHolder(final View itemView) {
             super(itemView);
             tvRoom = (TextView) itemView.findViewById(R.id.parcel_textView_room);
 
-            tvRoom.setOnClickListener(new View.OnClickListener(){
+            tvRoom.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    int pos = getAdapterPosition();
-                    if(pos!=RecyclerView.NO_POSITION) {
-                        ParcelDetailDialog.setDormitory(rooms.get(pos).getDormitory());
-                        ParcelDetailDialog.setRoomId(rooms.get(pos).getRoomNum());
-                        ParcelStudentListDialog parcelStudentListDialog = new ParcelStudentListDialog(context,rooms.get(pos));
-                        parcelStudentListDialog.setCanceledOnTouchOutside(true);
-                        parcelStudentListDialog.setCancelable(true);
-                        parcelStudentListDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                        parcelStudentListDialog.show();
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION)
+                    {
+                        ParcelDetailDialog.setDormitory(rooms.get(position).getDormitory());
+                        ParcelDetailDialog.setRoomId(rooms.get(position).getRoomNum());
+                        ParcelRegisterActivity.showDialog(rooms.get(position));
                     }
                 }
             });
-
         }
-    }
-    void init(){
-        roomApi = new Retrofit.Builder()
-                .baseUrl(ParcelRegisterActivity.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(RoomApi.class);
-
-        Call<List<RoomData>> callGetRooms = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(),floor);
-
-        callGetRooms.enqueue(new Callback<List<RoomData>>() {
-            @Override
-            public void onResponse(Call<List<RoomData>> call, Response<List<RoomData>> response) {
-                rooms = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<RoomData>> call, Throwable t) {
-                Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
-
-    public static List<UserData> getUsers(int roomId){
-        Call<List<UserData>> callGetUsers = roomApi.get_users(ParcelRegisterActivity.getToken(),roomId);
-        Callback<List<UserData>> callback = new Callback<List<UserData>>() {
-            @Override
-            public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
-                users = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<UserData>> call, Throwable t) {
-                Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        };
-        callGetUsers.enqueue(callback);
-        return users;
     }
 }

@@ -15,6 +15,10 @@ public class RoomData {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getDormitory(){return dormitory;}
 
     public void setRoomNum(int roomNum){

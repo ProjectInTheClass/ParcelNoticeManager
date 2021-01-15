@@ -2,33 +2,43 @@ package com.eos.parcelnoticemanager.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.data.RoomData;
+import com.eos.parcelnoticemanager.data.UserData;
+import com.eos.parcelnoticemanager.retrofit.RoomApi;
 import com.eos.parcelnoticemanager.tools.OnFloorItemClickListener;
+import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnFloorItemClickListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     static public ArrayList<Integer> floors;
-    private Context context;
+    static private Context context;
     private LayoutInflater layoutInflater;
 
-    public ParcelFloorAdapter(Context context, int floor){
+    public ParcelFloorAdapter(Context context, ArrayList<Integer> floors){
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
-        floors = new ArrayList<>();
-        for(int i=0; i<floor; i++){
-            floors.add(i+1);
-        }
+        this.floors = floors;
     }
 
     @NonNull
@@ -39,20 +49,34 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((GridViewHolder)holder).rvRoom.setAdapter(new ParcelRoomAdapter(context,floors.get(position)));
-        ((GridViewHolder)holder).rvRoom.setLayoutManager(new GridLayoutManager(context, 5));
-        ((GridViewHolder)holder).rvRoom.setHasFixedSize(true);
-        ((ParcelFloorAdapter.GridViewHolder)holder).tvFloorNum.setText(String.valueOf(floors.get(position))+"층");
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+        Call<List<RoomData>> callGetRooms =new Retrofit.Builder()
+                .baseUrl(ParcelRegisterActivity.getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(RoomApi.class)
+                .getRooms_byFloor(ParcelRegisterActivity.getToken(),floors.get(position));
+
+        callGetRooms.enqueue(new Callback<List<RoomData>>() {
+            @Override
+            public void onResponse(Call<List<RoomData>> call, Response<List<RoomData>> response) {
+                ParcelRoomAdapter adapter = new ParcelRoomAdapter(context,floors.get(position),response.body());
+                ((GridViewHolder)holder).rvRoom.setAdapter(adapter);
+                ((GridViewHolder)holder).rvRoom.setLayoutManager(new GridLayoutManager(context, 5));
+                ((GridViewHolder)holder).rvRoom.setHasFixedSize(true);
+                ((ParcelFloorAdapter.GridViewHolder)holder).tvFloorNum.setText(String.valueOf(floors.get(position))+"층");
+            }
+
+            @Override
+            public void onFailure(Call<List<RoomData>> call, Throwable t) {
+                Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return floors.size();
-    }
-
-    @Override
-    public void onItemClick(RecyclerView.ViewHolder holder, View view, int position) {
     }
 
 
@@ -66,4 +90,7 @@ public class ParcelFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tvFloorNum = itemView.findViewById(R.id.parcel_textView_floor);
         }
     }
+
+
+
 }

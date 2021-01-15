@@ -5,14 +5,14 @@ public class UserData {
     String email;
     String password;
     String name;
-    int phoneNum;
+    String phoneNum;
     String provider;
     String snsId;
     boolean isAuthed;
     int penalty;
     int advantage;
-    int room;
     int dormitory;
+    int room;
 
     public UserData(String name){
         this.name = name;

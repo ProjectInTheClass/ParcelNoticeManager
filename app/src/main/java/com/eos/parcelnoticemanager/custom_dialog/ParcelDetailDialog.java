@@ -6,14 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.retrofit.DormitoryApi;
+import com.eos.parcelnoticemanager.retrofit.ParcelApi;
 import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
 import com.google.gson.JsonObject;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -21,28 +26,30 @@ public class ParcelDetailDialog extends Dialog {
     Button btnConfirm, btnCancel;
     EditText etSender, etReceiver;
     String sender;
-    private static String receiver;
+    private static String receiverName;
     private static int receiverId;
     private static int roomId;
     private static int dormitoryId;
-//    private ParcelApi parcelApi;
+    private ParcelApi parcelApi;
+    Context context;
 
     public ParcelDetailDialog(@NonNull Context context) {
         super(context);
+        this.context = context;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parcel_detail_dialog);
-//        init();
+        init();
         btnConfirm = findViewById(R.id.parcel_detail_dialog_ok_button);
         btnCancel = findViewById(R.id.parcel_detail_dialog_cancel_button);
         etSender = findViewById(R.id.parcel_detail_dialog_sender_editText);
         etReceiver = findViewById(R.id.parcel_detail_dialog_receiver_editText);
 
-        if(receiver!=null){
-            etReceiver.setText(receiver);
+        if(receiverName!=null){
+            etReceiver.setText(receiverName);
             etReceiver.setEnabled(false);
         }
 
@@ -50,7 +57,6 @@ public class ParcelDetailDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 sender = etSender.getText().toString();
-                System.out.println("snd: "+sender + " , rcv: "+receiver);
                 //택배 등록
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("sender",sender);
@@ -58,7 +64,18 @@ public class ParcelDetailDialog extends Dialog {
                 jsonObject.addProperty("recipient",receiverId);
                 jsonObject.addProperty("room",roomId);
                 jsonObject.addProperty("dormitory",dormitoryId);
-//                parcelApi.add_parcel(ParcelRegisterActivity.getToken(),jsonObject);
+                Call<String> callGetResponse = parcelApi.add_parcel(ParcelRegisterActivity.getToken(),jsonObject);
+                callGetResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Toast.makeText(context,response.body(),Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
                 dismiss();
             }
         }) ;
@@ -71,17 +88,17 @@ public class ParcelDetailDialog extends Dialog {
 
     }
 
-//    private void init() {
-//        parcelApi = new Retrofit.Builder()
-//                .baseUrl(ParcelRegisterActivity.getBaseUrl())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build()
-//                .create(DormitoryApi.class);
-//    }
+    private void init() {
+        parcelApi = new Retrofit.Builder()
+                .baseUrl(ParcelRegisterActivity.getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(ParcelApi.class);
+    }
 
-    public static void setReceiver(int receiverId, String receiver) {
+    public static void setReceiver(int receiverId,String receiverName) {
         ParcelDetailDialog.receiverId = receiverId;
-        ParcelDetailDialog.receiver = receiver;
+        ParcelDetailDialog.receiverName = receiverName;
     }
     public static void setRoomId(int room){roomId = room;}
     public static void setDormitory(int dormitory) {dormitoryId = dormitory;}
