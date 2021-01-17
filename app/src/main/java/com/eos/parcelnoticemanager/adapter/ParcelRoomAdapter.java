@@ -85,7 +85,7 @@ public class ParcelRoomAdapter extends RecyclerView.Adapter<ParcelRoomAdapter.Cu
                     if (position != RecyclerView.NO_POSITION)
                     {
                         ParcelDetailDialog.setDormitory(rooms.get(position).getDormitory());
-                        ParcelDetailDialog.setRoomId(rooms.get(position).getRoomNum());
+                        ParcelDetailDialog.setRoomId(rooms.get(position).getId());
                         ParcelRegisterActivity.showDialog(rooms.get(position));
                     }
                 }

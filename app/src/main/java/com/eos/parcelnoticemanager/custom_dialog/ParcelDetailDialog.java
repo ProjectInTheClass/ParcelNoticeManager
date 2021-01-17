@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.eos.parcelnoticemanager.R;
-import com.eos.parcelnoticemanager.retrofit.DormitoryApi;
+import com.eos.parcelnoticemanager.data.ResponseData;
 import com.eos.parcelnoticemanager.retrofit.ParcelApi;
 import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
 import com.google.gson.JsonObject;
@@ -64,18 +64,19 @@ public class ParcelDetailDialog extends Dialog {
                 jsonObject.addProperty("recipient",receiverId);
                 jsonObject.addProperty("room",roomId);
                 jsonObject.addProperty("dormitory",dormitoryId);
-                Call<String> callGetResponse = parcelApi.add_parcel(ParcelRegisterActivity.getToken(),jsonObject);
-                callGetResponse.enqueue(new Callback<String>() {
+                Call<ResponseData> callGetResponse = parcelApi.add_parcel(ParcelRegisterActivity.getToken(),jsonObject);
+                callGetResponse.enqueue(new Callback<ResponseData>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        Toast.makeText(context,response.body(),Toast.LENGTH_SHORT).show();
+                    public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<ResponseData> call, Throwable t) {
                         Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 });
+
                 dismiss();
             }
         }) ;
