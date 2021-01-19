@@ -1,6 +1,8 @@
 package com.eos.parcelnoticemanager.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.data.FloorData;
+import com.eos.parcelnoticemanager.data.ResponseData;
 import com.eos.parcelnoticemanager.data.RoomData;
+import com.eos.parcelnoticemanager.data.TokenVO;
+import com.eos.parcelnoticemanager.retrofit.AuthApi;
 import com.eos.parcelnoticemanager.retrofit.RoomApi;
+import com.eos.parcelnoticemanager.tools.LoginActivity;
+import com.eos.parcelnoticemanager.tools.MainActivity;
 import com.eos.parcelnoticemanager.tools.OnFloorItemClickListener;
 import com.eos.parcelnoticemanager.tools.ParcelRegisterActivity;
 import com.eos.parcelnoticemanager.tools.RoomActivity;
@@ -29,6 +36,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.eos.parcelnoticemanager.tools.RoomActivity.getToken;
+
 
 public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnFloorItemClickListener {
 
@@ -38,6 +47,7 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private LayoutInflater layoutInflater;
     private OnItemClickListener mListener = null;
     RoomApi roomApi;
+    Retrofit retrofit;
 
     public FloorAdapter(ArrayList<FloorData> floors, Context context) {
         this.floors = floors;
@@ -72,6 +82,7 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return floors.size();
     }
 
+
     @Override public void onItemClick(RecyclerView.ViewHolder holder, View view, int position) {
         if(listener != null){
             listener.onItemClick(holder,view,position);
@@ -87,6 +98,7 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         RecyclerView recyclerView;
         TextView tvFloorNum;
         Button btnPlusRoom;
+        Button btnMinusRoom;
 
         public GridViewHolder(View itemView) {
             super(itemView);
@@ -105,46 +117,27 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         }
 
                     }
-                    roomApi = new Retrofit.Builder()
-                            .baseUrl(String.valueOf(R.string.base_url))
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build()
-                            .create(RoomApi.class);
 
-                    JsonObject jsonObject = new JsonObject();
-
-                    /*
-                    Call
-
-
-
-
-                    for(i = 0; i<totalFloor; i++){
-                        JsonObject jsonObject = new JsonObject();
-                        jsonObject.addProperty("floor",i+1);
-                        Call<ArrayList<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(ParcelRegisterActivity.getToken(), jsonObject);
-                        Callback<ArrayList<RoomData>> callback = new Callback<ArrayList<RoomData>>() {
-                            @Override
-                            public void onResponse(Call<ArrayList<RoomData>> call, Response<ArrayList<RoomData>> response) {
-                                globalfloors.get(i).setRooms(response.body());
-                            }
-                            @Override
-                            public void onFailure(Call<ArrayList<RoomData>> call, Throwable t) {
-                                Toast.makeText(RoomActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
-
-                            }
-                        };
-                        callRoomListByFloor.enqueue(callback);
-
-
-                    }*/
                 }
+            });
+            btnMinusRoom = (Button)itemView.findViewById(R.id.btnMinusRoom);
+            btnMinusRoom.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION)
+                    {
+                        if(mListener != null){
+                            mListener.onItemClick(v, pos);
+                        }
 
+                    }
 
-
+                }
             });
 
-
         }
+
     }
 }

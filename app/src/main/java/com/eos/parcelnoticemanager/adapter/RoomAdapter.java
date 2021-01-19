@@ -1,11 +1,14 @@
 package com.eos.parcelnoticemanager.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.StudnetInRoomData;
 import com.eos.parcelnoticemanager.tools.PlusStudentActivity;
+import com.eos.parcelnoticemanager.tools.RoomActivity;
 
 import java.util.ArrayList;
 
@@ -24,6 +28,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
     public ArrayList<StudnetInRoomData> students = new ArrayList<>();
     private LayoutInflater inflater;
     private RoomData room;
+    private int position;
     View view;
 
     public RoomAdapter(Context context, ArrayList<RoomData> rooms) {
@@ -58,13 +63,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
             super(itemView);
             tvRoomNum = itemView.findViewById(R.id.tvRoomNumber);
 
-            tvRoomNum.setOnClickListener(new View.OnClickListener(){
+            tvRoomNum.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), PlusStudentActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("roomNum", room.getRoomNum());
-                    intent.putExtras(bundle);
+                    //intent.putExtras(bundle);
                     context.startActivity(intent);
 
                 }
@@ -72,4 +77,5 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
 
         }
     }
+
 }

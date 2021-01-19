@@ -1,4 +1,5 @@
 package com.eos.parcelnoticemanager.retrofit;
+import com.eos.parcelnoticemanager.data.ResponseData;
 import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.UserData;
 import com.google.gson.JsonObject;
@@ -21,10 +22,10 @@ public interface RoomApi {
     Call<List<RoomData>> get_rooms(@Header("token") String token);
 
     @POST("sagam/room/add")
-    Call add_room(@Header("token") String token, @Body JsonObject jsonObject);
+    Call <ResponseData> add_room(@Header("token") String token, @Body JsonObject jsonObject);
 
     @PUT("sagam/room/updateUser")
-    Call update_user(@Header("token") String token, @Body JsonObject jsonObject);
+    Call <ResponseData> update_user(@Header("token") String token, @Body JsonObject jsonObject);
 
     @GET("sagam/room/getRoomsByFloor")
     Call<List<RoomData>> getRooms_byFloor(@Header("token") String token, @Query("floor") int floor);

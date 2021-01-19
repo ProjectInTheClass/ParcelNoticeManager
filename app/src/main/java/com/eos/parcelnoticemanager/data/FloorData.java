@@ -30,5 +30,6 @@ public class FloorData {
 
     public void setRooms(ArrayList<RoomData> rooms) {
         this.rooms = rooms;
+        finalRoomNum = floorNum*100+rooms.size();
     }
 }

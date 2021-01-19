@@ -49,7 +49,7 @@ public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((GridViewHolder)holder).recyclerView.setAdapter(new WasherAdpater(context,washerFloors.get(position).washers));
-        ((GridViewHolder)holder).recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+        ((GridViewHolder)holder).recyclerView.setLayoutManager(new GridLayoutManager(context, 5));
         ((GridViewHolder)holder).recyclerView.setHasFixedSize(true);
         if(washerFloors.get(position).isWasher == true) {
             ((GridViewHolder) holder).tvWasherFloorNum.setText(String.valueOf(washerFloors.get(position).floorNum)+"층 세탁기");
@@ -79,6 +79,7 @@ public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         RecyclerView recyclerView;
         TextView tvWasherFloorNum;
         Button btnPlusWasher;
+        Button btnMinusWasher;
 
         public GridViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +100,23 @@ public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 }
 
+            });
+
+            btnMinusWasher = (Button)itemView.findViewById(R.id.btnMinusWasher);
+            btnMinusWasher.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION)
+                    {
+                        if(mListener != null){
+                            mListener.onItemClick(v, pos);
+                        }
+
+                    }
+
+                }
             });
         }
     }
