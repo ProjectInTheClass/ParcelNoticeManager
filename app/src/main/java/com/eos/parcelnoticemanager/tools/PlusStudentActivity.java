@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -47,20 +48,15 @@ public class PlusStudentActivity extends AppCompatActivity {
     private SagamApi sagamApi;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        list = new ArrayList<String>();
-        settingList();
-
-        final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView);
-        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, list));
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_student);
-        Log.d("roomId", Integer.toString(RoomAdapter.whichId));
+        list = new ArrayList<String>();
+        Context context = PlusStudentActivity.this;
+        settingList(context);
     }
 
-    private void settingList() {
+    private void settingList(final Context context) {
         sagamApi = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -76,6 +72,11 @@ public class PlusStudentActivity extends AppCompatActivity {
                 for (int i = 0; i < userList.size(); i++) {
                     list.add(userList.get(i).getName() + " (" + userList.get(i).getPhoneNum() + ")");
                 }
+                final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView);
+                autoCompleteTextView.setAdapter(new ArrayAdapter<String>(context,
+                        android.R.layout.simple_dropdown_item_1line, list));
+
+                Log.d("roomId", Integer.toString(RoomAdapter.whichId));
 
             }
 
@@ -84,5 +85,6 @@ public class PlusStudentActivity extends AppCompatActivity {
                 Toast.makeText(PlusStudentActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         };
+        callGetUser.enqueue(callback);
     }
 }
