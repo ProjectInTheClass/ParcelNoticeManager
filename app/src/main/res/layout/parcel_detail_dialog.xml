@@ -14,7 +14,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="70dp"
         android:text="보낸 사람 "
-        android:textSize="25sp"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ems="10"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:hint="보낸 사람의 이름을 입력하세요."
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,8 +40,9 @@
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="40dp"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:text="받는 사람 "
-        android:textSize="25sp"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/parcel_detail_dialog_sender_editText" />
 
@@ -49,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ems="10"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:hint="받는 사람의 이름을 입력하세요."
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,9 +64,9 @@
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:text="택배 등록"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:textColor="#FFFFFF"
-        android:textSize="28sp"
-        android:textStyle="bold"
+        android:textSize="26sp"
         android:gravity="center"
         android:textAlignment="center"
         android:background="@color/colorPrimaryDark"
@@ -78,6 +82,7 @@
         android:background="@drawable/all_button_background"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="취소"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/parcel_detail_dialog_receiver_editText" />
@@ -90,6 +95,7 @@
         android:background="@drawable/all_button_background"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="확인"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/parcel_detail_dialog_receiver_editText" />
