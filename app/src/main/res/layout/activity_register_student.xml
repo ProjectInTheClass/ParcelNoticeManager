@@ -23,7 +23,7 @@
         android:layout_height="45dp"
         android:gravity="center_vertical"
         android:textColorHint="#555555"
-        android:completionHint="학생 이름을 입력해주세요"
+        android:hint="학생이름을 이력해주세요"
         android:completionThreshold="1" />
 
     <LinearLayout
