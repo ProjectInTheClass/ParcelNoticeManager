@@ -21,7 +21,7 @@ public interface WasherApi {
     Call <ResponseData> add_washer(@Header("token") String token, @Body JsonObject jsonObject);
 
     @DELETE("sagam/washer/delete")
-    Call <ResponseData> delete_washer(@Header("token") String token, @Body JsonObject jsonObject);
+    Call <ResponseData> delete_washer(@Header("token") String token, @Query("washer") int washer);
 
     @GET("user/washer/floor")
     Call<List<WasherData>> getWashers_byFloor(@Header("token") String token, @Query("floor") int floor);

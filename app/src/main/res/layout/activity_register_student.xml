@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".tools.NoticeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar_register_student"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:title="학생 등록"
+        android:theme="@style/ToolbarTheme"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:textColorHint="#555555"
+        android:completionHint="학생 이름을 입력해주세요"
+        android:completionThreshold="2" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/button_register_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorAccent"
+            android:shadowColor="#FFFFFF"
+            android:text="등록"
+            android:textColor="#000000"
+            android:textColorHighlight="#F4F6F6"
+            android:textColorHint="#009688"
+            android:textSize="18dp"
+            android:fontFamily="@font/nexon_gothic_lv1_bold"/>
+
+        <Button
+            android:id="@+id/button_register_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/colorAccent"
+            android:shadowColor="#FFFFFF"
+            android:text="취소"
+            android:textColor="#000000"
+            android:textColorHighlight="#F4F6F6"
+            android:textColorHint="#009688"
+            android:textSize="18dp"
+            android:fontFamily="@font/nexon_gothic_lv1_bold"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

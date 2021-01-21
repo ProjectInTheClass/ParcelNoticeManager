@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,8 @@ import com.eos.parcelnoticemanager.data.FloorData;
 import com.eos.parcelnoticemanager.data.ResponseData;
 import com.eos.parcelnoticemanager.data.RoomData;
 import com.eos.parcelnoticemanager.data.TokenVO;
+import com.eos.parcelnoticemanager.data.WasherData;
+import com.eos.parcelnoticemanager.data.WasherFloorData;
 import com.eos.parcelnoticemanager.retrofit.AuthApi;
 import com.eos.parcelnoticemanager.retrofit.DormitoryApi;
 import com.eos.parcelnoticemanager.retrofit.RoomApi;
@@ -36,14 +40,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RoomActivity extends AppCompatActivity {
 
-    private RecyclerView rvFloor;
-    private FloorAdapter floorAdapter;
-    public ArrayList<FloorData> globalfloors = new ArrayList<>();
+    private static RecyclerView rvFloor;
+    private static FloorAdapter floorAdapter;
+    public static ArrayList<FloorData> globalfloors = new ArrayList<>();
     int totalFloor;
-    private RoomApi roomApi;
+    private static RoomApi roomApi;
     private DormitoryData dormitoryData;
     private DormitoryApi dormitoryApi;
     static SharedPreferences pref;
+    public static Context context;
     Retrofit retrofit;
 
 
@@ -51,6 +56,8 @@ public class RoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
+        context = RoomActivity.this;
+
         pref = getSharedPreferences("token",0);
         init();
 
@@ -100,60 +107,7 @@ public class RoomActivity extends AppCompatActivity {
                             LinearLayoutManager manager = new LinearLayoutManager(RoomActivity.this);
                             rvFloor.setLayoutManager(manager);
                             rvFloor.setAdapter(floorAdapter);
-                            //+ 버튼을 눌렀을때 (방추가하기)
-                            floorAdapter.setOnItemClickListener(new FloorAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, int position) {
-                                    FloorData floor = globalfloors.get(position);
-                                    RoomData newRoom = new RoomData();
-                                    floor.finalRoomNum++;
-                                    newRoom.setRoomNum(floor.finalRoomNum);
-                                    floor.rooms.add(newRoom);
-                                    rvFloor.setAdapter(floorAdapter);
-                                    JsonObject json = new JsonObject();
 
-
-                                    json.addProperty("floor", position+1);
-                                    json.addProperty("roomNum", newRoom.getRoomNum());
-
-                                    Call<ResponseData> call = roomApi.add_room(getToken(), json);
-                                    call.enqueue(new Callback<ResponseData>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                                            if(response.isSuccessful()){
-                                                Toast.makeText(RoomActivity.this,response.message(),Toast.LENGTH_SHORT).show();
-                                                if(response.body() == null){
-                                                    Toast.makeText(RoomActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
-                                                    return;
-                                                }
-
-                                            }else{
-                                                Toast.makeText(RoomActivity.this,response.message().toString(),Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                        @Override
-                                        public void onFailure(Call call, Throwable t) {
-                                            Log.e( "onFailure: ",t.getMessage() );
-                                        }
-                                    });
-
-                                }
-                            });
-
-                            //-버튼을 눌렀을 때(마지막 방 삭제하기)
-                            floorAdapter.setOnItemClickListener(new FloorAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, int position) {
-                                    FloorData floor = globalfloors.get(position);
-                                    //방이 존재하는 경우에만 삭제할수있다.
-                                    if(floor.getRooms().size() != 0) {
-                                        //floor.finalRoomNum--;
-                                        floor.getRooms().remove(floor.getRooms().size() - 1);
-                                        rvFloor.setAdapter(floorAdapter);
-                                    }
-                                }
-
-                            });
 
                         }
                         @Override
@@ -178,6 +132,84 @@ public class RoomActivity extends AppCompatActivity {
     public static String getToken(){
         return pref.getString("token","");
     }
+
+    public static void PlusRoom(View v, final int position) {
+        final FloorData floor = globalfloors.get(position);
+        RoomData newRoom = new RoomData();
+        floor.finalRoomNum++;
+        newRoom.setRoomNum(floor.finalRoomNum);
+        floor.rooms.add(newRoom);
+
+        JsonObject json = new JsonObject();
+        json.addProperty("floor", position+1);
+        json.addProperty("roomNum", newRoom.getRoomNum());
+
+        Call<ResponseData> call = roomApi.add_room(getToken(), json);
+        call.enqueue(new Callback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                if(response.isSuccessful()){
+                    rvFloor.setAdapter(floorAdapter);
+                    UpdateRooms(floor.floorNum);
+
+
+                }else{}
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e( "onFailure: ",t.getMessage() );
+            }
+        });
+    }
+    public static void MinusRoom(View v, int position){
+        final FloorData floor = globalfloors.get(position);
+        if(floor.rooms.size()!= 0) {
+            int id = floor.rooms.get(floor.rooms.size()-1).getId();
+            Call <ResponseData> call = roomApi.delete_room(getToken(), id);
+            Log.e("삭제하는거 몇번? ", Integer.toString(id));
+            call.enqueue(new Callback<ResponseData>(){
+                @Override
+                public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                    floor.rooms.remove(floor.rooms.size() - 1);
+                    rvFloor.setAdapter(floorAdapter);
+                    floor.finalRoomNum--;
+
+
+                }
+                @Override
+                public void onFailure(Call<ResponseData> call, Throwable t) {
+                    Log.e("onFailure: ", t.getMessage());
+                }
+            });
+        }
+
+    }
+    public static void UpdateRooms(int whichFloor) {
+        Log.e("여기 들어오나?", Integer.toString(whichFloor));
+
+        Call<List<RoomData>> callRoomListByFloor = roomApi.getRooms_byFloor(getToken(), whichFloor);
+        final FloorData floor = globalfloors.get(whichFloor - 1);
+
+        Callback<List<RoomData>> callback2 = new Callback<List<RoomData>>() {
+            @Override
+            public void onResponse(Call<List<RoomData>> call, Response<List<RoomData>> response) {
+                floor.setRooms((ArrayList<RoomData>) response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<RoomData>> call, Throwable t) {
+                Log.e("실패?", "실패");
+            }
+        };
+        callRoomListByFloor.enqueue(callback2);
+
+    }
+    public static void switchContext(){
+        Intent intent = new Intent(context, PlusStudentActivity.class);
+        context.startActivity(intent);
+    }
+
 
 }
 

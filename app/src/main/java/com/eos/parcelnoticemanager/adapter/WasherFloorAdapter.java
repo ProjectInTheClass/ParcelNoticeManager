@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eos.parcelnoticemanager.R;
 import com.eos.parcelnoticemanager.data.WasherFloorData;
 import com.eos.parcelnoticemanager.tools.OnWasherFloorItemClickListener;
+import com.eos.parcelnoticemanager.tools.WasherActivity;
 
 import java.util.ArrayList;
 
@@ -93,9 +94,7 @@ public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION)
                     {
-                        if(mListener != null){
-                            mListener.onItemClick(v, pos);
-                        }
+                        WasherActivity.PlusWasher(v, pos);
 
                     }
                 }
@@ -110,9 +109,7 @@ public class WasherFloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION)
                     {
-                        if(mListener != null){
-                            mListener.onItemClick(v, pos);
-                        }
+                        WasherActivity.MinusWasher(v, pos);
 
                     }
 

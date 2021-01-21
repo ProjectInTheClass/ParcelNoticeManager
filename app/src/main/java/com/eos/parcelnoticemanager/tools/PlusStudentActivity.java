@@ -9,19 +9,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eos.parcelnoticemanager.R;
+import com.eos.parcelnoticemanager.adapter.RoomAdapter;
+import com.eos.parcelnoticemanager.data.DormitoryData;
+import com.eos.parcelnoticemanager.data.FloorData;
 import com.eos.parcelnoticemanager.data.StudnetInRoomData;
+import com.eos.parcelnoticemanager.data.UserData;
+import com.eos.parcelnoticemanager.retrofit.RoomApi;
+import com.eos.parcelnoticemanager.retrofit.SagamApi;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,71 +40,49 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.eos.parcelnoticemanager.tools.RoomActivity.getToken;
+
 public class PlusStudentActivity extends AppCompatActivity {
-    Intent intent = getIntent();
-    Bundle bundle = intent.getExtras();
-    ArrayList<StudnetInRoomData> students = (ArrayList< StudnetInRoomData>)bundle.getSerializable("studentList");
-
-    public class PlusStudentAdapter extends RecyclerView.Adapter<PlusStudentAdapter.ViewHolder> {
-        ArrayList<StudnetInRoomData> students = new ArrayList<>();
-
-        @NonNull
-        @Override
-        public PlusStudentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dialog_student, parent, false);
-            ViewHolder viewHolder = new ViewHolder(itemView);
-
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull PlusStudentAdapter.ViewHolder viewHolder, int position) {
-
-            StudnetInRoomData item = students.get(position);
-            viewHolder.tvStuName.setText(item.getStudentName());
-            viewHolder.tvStuNumber.setText(item.getStudentNum());
-        }
-
-        @Override
-        public int getItemCount() {
-            return students.size();
-        }
-
-        public void setItems(ArrayList<StudnetInRoomData> students) {
-            this.students = students;
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-
-            TextView tvStuName;
-            TextView tvStuNumber;
-
-            ViewHolder(View itemView) {
-                super(itemView);
-
-                tvStuName = itemView.findViewById(R.id.et_singleRoom_student);
-                tvStuNumber = itemView.findViewById(R.id.et_room_studentNumber);
-            }
-        }
-    }
-
-    private PlusStudentAdapter adapter = new PlusStudentAdapter();
+    private ArrayList<String> list; //자동완성될 데이터
+    private SagamApi sagamApi;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        list = new ArrayList<String>();
+        settingList();
 
-        //recycleView 초기화
-        RecyclerView recyclerView = findViewById(R.id.rv_exist_student);
+        final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView);
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, list));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
-        //아이템 로드
-        adapter.setItems(students);
-
+        setContentView(R.layout.activity_register_student);
+        Log.d("roomId", Integer.toString(RoomAdapter.whichId));
     }
 
+    private void settingList() {
+        sagamApi = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(SagamApi.class);
+
+        Call<List<UserData>> callGetUser = sagamApi.getUsers(getToken());
+        Callback<List<UserData>> callback = new Callback<List<UserData>>() {
+            @Override
+            public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
+                ArrayList<UserData> userList = new ArrayList<>(response.body());
+
+                for (int i = 0; i < userList.size(); i++) {
+                    list.add(userList.get(i).getName() + " (" + userList.get(i).getPhoneNum() + ")");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<UserData>> call, Throwable t) {
+                Toast.makeText(PlusStudentActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        };
+    }
 }

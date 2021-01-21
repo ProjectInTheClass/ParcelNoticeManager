@@ -112,9 +112,7 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION)
                     {
-                        if(mListener != null){
-                            mListener.onItemClick(v, pos);
-                        }
+                        RoomActivity.PlusRoom(v, pos);
 
                     }
 
@@ -128,9 +126,8 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION)
                     {
-                        if(mListener != null){
-                            mListener.onItemClick(v, pos);
-                        }
+                        RoomActivity.MinusRoom(v, pos);
+
 
                     }
 

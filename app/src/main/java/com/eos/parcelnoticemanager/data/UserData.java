@@ -27,4 +27,8 @@ public class UserData {
     }
 
     public int getId(){return id;}
+
+    public String getPhoneNum(){
+        return phoneNum;
+    }
 }

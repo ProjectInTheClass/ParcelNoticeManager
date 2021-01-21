@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,16 +37,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WasherActivity extends AppCompatActivity {
 
-    private RecyclerView rvWasherFloor;
-    private WasherFloorAdapter washerFloorAdapter;
-    public ArrayList<WasherFloorData> globalfloors = new ArrayList<>();
-    private WasherApi washerApi;
-    private DormitoryApi dormitoryApi;
+    private static RecyclerView rvWasherFloor;
+    private static WasherFloorAdapter washerFloorAdapter;
+    public static ArrayList<WasherFloorData> globalfloors = new ArrayList<>();
+    private static WasherApi washerApi;
+    private static DormitoryApi dormitoryApi;
     static SharedPreferences pref;
     private DormitoryData dormitoryData;
-    private int totalFloor;
-
-
+    private static int totalFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,86 +108,6 @@ public class WasherActivity extends AppCompatActivity {
                             rvWasherFloor.setLayoutManager(manager);
                             rvWasherFloor.setAdapter(washerFloorAdapter);
 
-                            //+버튼 눌렀을때 세탁기 추가하기
-                            washerFloorAdapter.setOnItemClickListener(new WasherFloorAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, int position) {
-                                    WasherFloorData floor = globalfloors.get(position);
-                                    WasherData newWasher = new WasherData();
-                                    floor.finalWasherNum++;
-                                    newWasher.washerNum = floor.finalWasherNum;
-                                    floor.washers.add(newWasher);
-                                    rvWasherFloor.setAdapter(washerFloorAdapter);
-                                    JsonObject json = new JsonObject();
-
-                                    json.addProperty("floor", position+1);
-
-                                    Call<ResponseData> call = washerApi.add_washer(getToken(), json);
-                                    call.enqueue(new Callback<ResponseData>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                                            if(response.isSuccessful()){
-                                                Toast.makeText(WasherActivity.this,response.message(),Toast.LENGTH_SHORT).show();
-                                                if(response.body() == null){
-                                                    Toast.makeText(WasherActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
-                                                    return;
-                                                }
-
-                                            }else{
-                                                Toast.makeText(WasherActivity.this,response.message().toString(),Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                        @Override
-                                        public void onFailure(Call call, Throwable t) {
-                                            Log.e( "onFailure: ",t.getMessage() );
-                                        }
-                                    });
-
-                                }
-                            });
-
-                            //-버튼을 눌렀을 때(마지막 방 삭제하기)
-                            washerFloorAdapter.setOnItemClickListener(new WasherFloorAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, int position) {
-                                    WasherFloorData floor = globalfloors.get(position);
-                                    //floor.finalWasherNum--;
-                                    if(floor.washers.size()!= 0) {
-                                        floor.washers.remove(floor.washers.size() - 1);
-                                        rvWasherFloor.setAdapter(washerFloorAdapter);
-                                    }
-
-                                    /*
-                                    JsonObject json = new JsonObject();
-
-                                    json.addProperty("floor", position+1);
-
-                                    Call<ResponseData> call = washerApi.add_washer(getToken(), json);
-                                    call.enqueue(new Callback<ResponseData>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                                            if(response.isSuccessful()){
-                                                Toast.makeText(WasherActivity.this,response.message(),Toast.LENGTH_SHORT).show();
-                                                if(response.body() == null){
-                                                    Toast.makeText(WasherActivity.this,"알 수 없는 에러입니다. 개발자에게 문의하세요",Toast.LENGTH_LONG).show();
-                                                    return;
-                                                }
-
-                                            }else{
-                                                Toast.makeText(WasherActivity.this,response.message().toString(),Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                        @Override
-                                        public void onFailure(Call call, Throwable t) {
-                                            Log.e( "onFailure: ",t.getMessage() );
-                                        }
-                                    });*/
-
-
-
-                                }
-
-                            });
                         }
                         @Override
                         public void onFailure(Call<List<WasherData>> call, Throwable t) {
@@ -210,4 +129,87 @@ public class WasherActivity extends AppCompatActivity {
     public static String getToken(){
         return pref.getString("token","");
     }
+
+    public static void PlusWasher(View v, final int position) {
+        JsonObject json = new JsonObject();
+
+        json.addProperty("floor", position + 1);
+
+        Call<ResponseData> call = washerApi.add_washer(getToken(), json);
+        call.enqueue(new Callback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                if (response.isSuccessful()) {
+                    final WasherFloorData floor = globalfloors.get(position);
+                    Log.e("몇층에 추가? ", Integer.toString(floor.floorNum));
+                    Log.e("몇호??", Integer.toString(floor.finalWasherNum));
+                    WasherData newWasher = new WasherData();
+                    floor.finalWasherNum++;
+                    newWasher.washerNum = floor.finalWasherNum;
+                    floor.washers.add(newWasher);
+                    rvWasherFloor.setAdapter(washerFloorAdapter);
+                    //바뀐 부분이 있는 층을 업데이트하기
+                    UpdateWasher(floor.floorNum);
+
+                } else {}
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e("onFailure: ", t.getMessage());
+            }
+        });
+    }
+    public static void MinusWasher(View v, int position){
+        final WasherFloorData floor = globalfloors.get(position);
+        if(floor.washers.size()!= 0) {
+            int id = floor.washers.get(floor.washers.size()-1).getId();
+            Call <ResponseData> call = washerApi.delete_washer(getToken(), id);
+            Log.e("삭제하는거 몇번? ", Integer.toString(id));
+            call.enqueue(new Callback<ResponseData>(){
+                @Override
+                public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                    floor.washers.remove(floor.washers.size() - 1);
+                    rvWasherFloor.setAdapter(washerFloorAdapter);
+                    floor.finalWasherNum--;
+
+
+                }
+                @Override
+                public void onFailure(Call<ResponseData> call, Throwable t) {
+                    Log.e("onFailure: ", t.getMessage());
+                }
+            });
+        }
+
+    }
+    public static void UpdateWasher(int whichFloor){
+        Log.e("여기 들어오나?", Integer.toString(whichFloor));
+
+        //해당 층에 있는 세탁기 건조기들을 불러옵니다. 없을 수도 있어요.
+        Call<List<WasherData>> callRoomListByFloor = washerApi.getWashers_byFloor(getToken(), whichFloor);
+        final WasherFloorData floor = globalfloors.get(whichFloor-1);
+
+        //층에 있는 세탁기들 정보를 불러옵니다.
+        Callback<List<WasherData>> callback2 = new Callback<List<WasherData>>() {
+            @Override
+            public void onResponse(Call<List<WasherData>> call, Response<List<WasherData>> response) {
+                floor.setWashers((ArrayList<WasherData>) response.body());
+                for(int i = 0; i<floor.washers.size(); i++){
+                    floor.washers.get(i).washerNum = i+1;
+                }
+                Log.e("마지막 애 id", Integer.toString(floor.washers.get(floor.washers.size()-1).getId()));
+                floor.finalWasherNum = floor.washers.size();
+
+            }
+            @Override
+            public void onFailure(Call<List<WasherData>> call, Throwable t) {
+                Log.e("실패?", "실패");
+            }
+        };
+        callRoomListByFloor.enqueue(callback2);
+
+    }
+
+
 }

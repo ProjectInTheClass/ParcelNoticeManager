@@ -9,6 +9,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -29,6 +30,9 @@ public interface RoomApi {
 
     @GET("sagam/room/getRoomsByFloor")
     Call<List<RoomData>> getRooms_byFloor(@Header("token") String token, @Query("floor") int floor);
+
+    @DELETE("sagam/room/delete")
+    Call <ResponseData> delete_room(@Header("token") String token, @Query("room") int room);
 
     @GET("sagam/room/users")
     Call <List<UserData>> get_users(@Header("token") String token, @Query("roomId") int roomId);

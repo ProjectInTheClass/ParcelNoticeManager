@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
     private LayoutInflater inflater;
     private RoomData room;
     private int position;
+    public static int whichId;
     View view;
 
     public RoomAdapter(Context context, ArrayList<RoomData> rooms) {
@@ -66,11 +68,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
             tvRoomNum.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), PlusStudentActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("roomNum", room.getRoomNum());
-                    //intent.putExtras(bundle);
-                    context.startActivity(intent);
+                    whichId = room.getId();
+                    RoomActivity.switchContext();
 
                 }
             });
