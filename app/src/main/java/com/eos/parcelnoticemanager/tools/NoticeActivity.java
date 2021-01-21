@@ -42,10 +42,10 @@ public class NoticeActivity extends AppCompatActivity {
 
         init();
 
-        et_notice.addTextChangedListener(new TextWatcher() {
+/*        et_notice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               // et_notice.setText(notice.getContents());
+                et_notice.setText(notice.getContents());
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -54,29 +54,23 @@ public class NoticeActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 et_notice.setText(editable.toString());
             }
-        });
+        });*/
 
 
-        btn_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notice.setContents(et_notice.getText().toString());
-                saveNotice();
-            }
-        });
     }
 
     private void saveNotice() {
-        Call<ResponseData> call = noticeApi.delete_notice(pref.getString("token",""),notice.getId());
-        call.enqueue(new Callback<ResponseData>() {
-            @Override
-            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) { }
-            @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) { }
-        });
-
+        if(notice!=null) {
+            Call<ResponseData> call = noticeApi.delete_notice(pref.getString("token", ""), notice.getId());
+            call.enqueue(new Callback<ResponseData>() {
+                @Override
+                public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {}
+                @Override
+                public void onFailure(Call<ResponseData> call, Throwable t) {}
+            });
+        }
         JsonObject json = new JsonObject();
-        json.addProperty("contexts",notice.getContents());
+        json.addProperty("contents",et_notice.getText().toString());
         Call<ResponseData> callAdd = noticeApi.add_notice(pref.getString("token",""),json);
         callAdd.enqueue(new Callback<ResponseData>() {
             @Override
@@ -85,9 +79,7 @@ public class NoticeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) {
-
-            }
+            public void onFailure(Call<ResponseData> call, Throwable t) {  }
         });
     }
 
@@ -106,13 +98,21 @@ public class NoticeActivity extends AppCompatActivity {
         callNotice.enqueue(new Callback<List<NoticeData>>() {
             @Override
             public void onResponse(Call<List<NoticeData>> call, Response<List<NoticeData>> response) {
-                notice = response.body().get(0);
-                et_notice.setText(notice.getContents());
-
+                if(response.body().size()!=0) {
+                    notice = response.body().get(0);
+                    et_notice.setText(notice.getContents());
+                }
             }
-
             @Override
             public void onFailure(Call<List<NoticeData>> call, Throwable t) {  }
+        });
+
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveNotice();
+            }
         });
     }
 }

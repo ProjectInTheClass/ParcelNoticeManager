@@ -21,7 +21,7 @@ public interface NoticeApi {
     @POST("sagam/notice/add")
     Call<ResponseData> add_notice(@Header("token") String token, @Body JsonObject jsonObject);
 
-    @DELETE("sagan/notice/delete")
+    @DELETE("sagam/notice/delete")
     Call<ResponseData> delete_notice(@Header("token") String token, @Query("notice") int notice);
 
 }
