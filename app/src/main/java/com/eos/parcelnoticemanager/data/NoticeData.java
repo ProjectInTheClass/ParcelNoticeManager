@@ -4,15 +4,19 @@ import android.view.View;
 import android.widget.EditText;
 
 public class NoticeData {
-    String noticeData = "공지";
+    private int id;
+    private String contents;
+    private int sagam;
 
-    public void saveNoticeData(String noticeData){
-        this.noticeData = noticeData;
+    public int getId() {
+        return id;
     }
 
-    public String getNoticeData(){
-        return noticeData;
+    public String getContents() {
+        return contents;
     }
 
-
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
 }
