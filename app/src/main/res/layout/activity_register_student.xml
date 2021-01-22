@@ -28,7 +28,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="horizontal"
         >
@@ -37,13 +37,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+
             android:background="@color/colorAccent"
             android:shadowColor="#FFFFFF"
             android:text="등록"
             android:textColor="#000000"
             android:textColorHighlight="#F4F6F6"
             android:textColorHint="#009688"
+            android:layout_marginTop="10dp"
             android:textSize="18dp"
             android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
@@ -52,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+
             android:layout_marginLeft="20dp"
             android:background="@color/colorAccent"
             android:shadowColor="#FFFFFF"
@@ -60,6 +61,7 @@
             android:textColor="#000000"
             android:textColorHighlight="#F4F6F6"
             android:textColorHint="#009688"
+            android:layout_marginTop="10dp"
             android:textSize="18dp"
             android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 

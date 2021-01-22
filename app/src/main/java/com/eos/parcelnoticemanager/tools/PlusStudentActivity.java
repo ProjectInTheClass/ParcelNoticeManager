@@ -114,6 +114,7 @@ public class PlusStudentActivity extends AppCompatActivity {
                                 Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG).show();
                             }
                         };
+                        callUpdateRoom.enqueue(callback);
 
                     }
                 });

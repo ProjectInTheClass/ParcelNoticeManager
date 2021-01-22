@@ -27,15 +27,18 @@
         android:layout_marginLeft="20dp"
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
-    <EditText
-        android:id="@+id/editText_studentName"
-        android:layout_width="370dp"
-        android:layout_height="55dp"
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView_reward"
+        android:layout_width="380dp"
+        android:layout_marginTop = "10dp"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
         android:layout_gravity="center"
-        android:layout_marginTop="7dp"
-        android:hint="  이름을 입력해주세요   ex) 홍길동"
-        android:background="@drawable/border"
-        android:fontFamily="@font/nexon_gothic_lv1_bold"/>
+        android:textColorHint="#555555"
+        android:hint="학생이름을 이력해주세요"
+        android:completionThreshold="1"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:background="@drawable/border"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,16 +46,16 @@
 
         <Button
             android:id="@+id/button_plusPoint"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:text="상점"
-            android:textSize="20dp"
-            android:layout_weight="1"
-            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimary"
+            android:fontFamily="@font/nexon_gothic_lv1_bold"
+            android:text="상점"
             android:textColor="#FFFFFF"
-            android:fontFamily="@font/nexon_gothic_lv1_bold"/>
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/button_minusPoint"
@@ -111,15 +114,36 @@
         android:background="@drawable/border"
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
-    <Button
-        android:id="@+id/button_save_reward"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:textSize="15dp"
-        android:text="저장하기"
-        android:background="#90daf5"
-        android:fontFamily="@font/nexon_gothic_lv1_bold" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/button_save_reward"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:textSize="15dp"
+            android:text="저장"
+            android:background="#90daf5"
+            android:fontFamily="@font/nexon_gothic_lv1_bold" />
+
+        <Button
+            android:id="@+id/button_nosave_reward"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="15dp"
+            android:text="취소"
+            android:background="#90daf5"
+            android:fontFamily="@font/nexon_gothic_lv1_bold" />
+    </LinearLayout>
+
+
 
 </LinearLayout>
