@@ -42,7 +42,7 @@ public class RoomActivity extends AppCompatActivity {
 
     private static RecyclerView rvFloor;
     private static FloorAdapter floorAdapter;
-    public static ArrayList<FloorData> globalfloors = new ArrayList<>();
+    public static ArrayList<FloorData> globalfloors;
     int totalFloor;
     private static RoomApi roomApi;
     private DormitoryData dormitoryData;
@@ -77,6 +77,7 @@ public class RoomActivity extends AppCompatActivity {
                 .build()
                 .create(DormitoryApi.class);
 
+        globalfloors = new ArrayList<>();
 
         Call<DormitoryData> callGetDormitory = dormitoryApi.get_dormitory(getToken());
         Callback<DormitoryData> callback = new Callback<DormitoryData>() {
