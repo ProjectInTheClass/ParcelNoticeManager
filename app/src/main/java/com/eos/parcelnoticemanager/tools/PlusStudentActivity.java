@@ -94,7 +94,7 @@ public class PlusStudentActivity extends AppCompatActivity {
                         String who = autoCompleteTextView.getText().toString();
                         int index;
                         for(index = 0; index < list.size(); index++){
-                            if(list.get(0).equals(who)) break;
+                            if(list.get(index).equals(who)) break;
                         }
                         int id = userList.get(index).getId();
                         JsonObject json = new JsonObject();

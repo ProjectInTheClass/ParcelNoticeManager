@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eos.parcelnoticemanager.R;
@@ -40,6 +41,8 @@ public class RewardActivity extends AppCompatActivity {
     private EditText ed_name;
     private EditText ed_score;
     private EditText ed_reason;
+    private TextView tv_score;
+    private TextView tv_reason;
     private Button btn_save_reward;
     private Button btn_plus, btn_minus;
     private Button btn_nosave_reward;
@@ -57,6 +60,9 @@ public class RewardActivity extends AppCompatActivity {
 
         ed_score = (EditText)findViewById(R.id.editText_score);
         ed_reason = (EditText)findViewById(R.id.editText_reason);
+
+        tv_score = findViewById(R.id.textView_score);
+        tv_reason = findViewById(R.id.textView_reason);
 
         btn_plus = (Button)findViewById(R.id.button_plusPoint);
         btn_minus = (Button)findViewById(R.id.button_minusPoint);
@@ -102,6 +108,7 @@ public class RewardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         type = "상점";
+                        makeVisible();
                     }
                 });
                 //벌점 버튼 눌렀으면 벌점 type으로 바꿔주기
@@ -109,6 +116,7 @@ public class RewardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         type = "벌점";
+                        makeVisible();
                     }
                 });
 
@@ -168,7 +176,16 @@ public class RewardActivity extends AppCompatActivity {
         };
         callGetUser.enqueue(callback);
     }
-    public static String getToken(){
+    private String getToken(){
         return pref.getString("token","");
+    }
+
+    private void makeVisible(){
+        tv_reason.setVisibility(View.VISIBLE);
+        tv_score.setVisibility(View.VISIBLE);
+        btn_nosave_reward.setVisibility(View.VISIBLE);
+        btn_save_reward.setVisibility(View.VISIBLE);
+        ed_score.setVisibility(View.VISIBLE);
+        ed_reason.setVisibility(View.VISIBLE);
     }
 }

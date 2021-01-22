@@ -31,11 +31,11 @@
         android:id="@+id/autoCompleteTextView_reward"
         android:layout_width="380dp"
         android:layout_marginTop = "10dp"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:gravity="center_vertical"
         android:layout_gravity="center"
-        android:textColorHint="#555555"
-        android:hint="학생이름을 이력해주세요"
+        android:hint="학생이름을 입력해주세요"
+        android:paddingLeft="10dp"
         android:completionThreshold="1"
         android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:background="@drawable/border"/>
@@ -51,29 +51,33 @@
             android:layout_marginLeft="70dp"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/all_button_background"
+            android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/nexon_gothic_lv1_bold"
             android:text="상점"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/button_minusPoint"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:text="벌점"
-            android:textSize="17dp"
+            android:textSize="20sp"
             android:layout_weight="1"
             android:layout_marginTop="30dp"
             android:layout_marginRight="70dp"
             android:layout_marginLeft = "30dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/all_button_background"
+            android:backgroundTint="@color/colorPrimary"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView_score"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="점수 입력"
@@ -84,17 +88,21 @@
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
     <EditText
+        android:visibility="invisible"
         android:id="@+id/editText_score"
         android:layout_width="370dp"
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="7dp"
-        android:hint="  부과할 점수를 입력해주세요   ex) 5"
+        android:hint="부과할 점수를 입력해주세요   ex) 5"
+        android:paddingLeft="10dp"
         android:background="@drawable/border"
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
 
     <TextView
+        android:id="@+id/textView_reason"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="사유 입력"
@@ -105,12 +113,14 @@
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
     <EditText
+        android:visibility="invisible"
         android:id="@+id/editText_reason"
         android:layout_width="370dp"
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="7dp"
-        android:hint="  사유를 입력해주세요   ex) 벌레잡음"
+        android:hint="사유를 입력해주세요   ex) 벌레잡음"
+        android:paddingLeft="10dp"
         android:background="@drawable/border"
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
@@ -121,26 +131,30 @@
         android:layout_gravity="center">
 
         <Button
+            android:visibility="invisible"
             android:id="@+id/button_save_reward"
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:textSize="15dp"
             android:text="저장"
-            android:background="#90daf5"
+            android:background="@drawable/all_button_background"
+            android:backgroundTint="#90daf5"
             android:fontFamily="@font/nexon_gothic_lv1_bold" />
 
         <Button
+            android:visibility="invisible"
             android:id="@+id/button_nosave_reward"
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
             android:textSize="15dp"
             android:text="취소"
-            android:background="#90daf5"
+            android:background="@drawable/all_button_background"
+            android:backgroundTint="#90daf5"
             android:fontFamily="@font/nexon_gothic_lv1_bold" />
     </LinearLayout>
 
