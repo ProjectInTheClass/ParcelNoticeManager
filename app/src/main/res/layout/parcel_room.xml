@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="15dp"
     android:layout_width="80dp"
     android:layout_height="80dp">
 
@@ -13,6 +14,7 @@
         android:background="@drawable/all_button_background"
         android:backgroundTint="@color/colorAccent"
         android:text="101"
+        android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:textSize="25sp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
