@@ -33,7 +33,9 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="7dp"
-        android:hint="  이름을 입력해주세요   ex) 홍길동"
+        android:hint="이름을 입력해주세요   ex) 홍길동"
+        android:textSize="20sp"
+        android:paddingLeft="10dp"
         android:background="@drawable/border"
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
@@ -50,7 +52,8 @@
             android:layout_weight="1"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="70dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/all_button_background"
+            android:backgroundTint="@color/colorPrimary"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
@@ -64,7 +67,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="70dp"
             android:layout_marginLeft = "30dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/all_button_background"
+            android:backgroundTint="@color/colorPrimary"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
@@ -86,7 +90,9 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="7dp"
-        android:hint="  부과할 점수를 입력해주세요   ex) 5"
+        android:hint="부과할 점수를 입력해주세요   ex) 5"
+        android:textSize="20sp"
+        android:paddingLeft="10dp"
         android:background="@drawable/border"
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
@@ -107,19 +113,22 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="7dp"
-        android:hint="  사유를 입력해주세요   ex) 벌레잡음"
+        android:hint="사유를 입력해주세요   ex) 벌레잡음"
+        android:textSize="20sp"
+        android:paddingLeft="10dp"
         android:background="@drawable/border"
         android:fontFamily="@font/nexon_gothic_lv1_bold"/>
 
     <Button
         android:id="@+id/button_save_reward"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:textSize="15dp"
         android:text="저장하기"
-        android:background="#90daf5"
+        android:background="@drawable/all_button_background"
+        android:backgroundTint="#90daf5"
         android:fontFamily="@font/nexon_gothic_lv1_bold" />
 
 </LinearLayout>

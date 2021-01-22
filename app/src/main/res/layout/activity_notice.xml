@@ -60,7 +60,7 @@
         android:shadowColor="#FFFFFF"
         android:text="저장하기"
         android:textColor="#000000"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_background" />
