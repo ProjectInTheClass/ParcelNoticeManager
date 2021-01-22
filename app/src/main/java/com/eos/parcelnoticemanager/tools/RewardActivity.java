@@ -126,7 +126,7 @@ public class RewardActivity extends AppCompatActivity {
                         String who = autoCompleteTextView.getText().toString();
                         int index;
                         for (index = 0; index < list.size(); index++) {
-                            if (list.get(0).equals(who)) break;
+                            if (list.get(index).equals(who)) break;
                         }
                         int user = userList.get(index).getId();
                         int amount = Integer.parseInt(ed_score.getText().toString());

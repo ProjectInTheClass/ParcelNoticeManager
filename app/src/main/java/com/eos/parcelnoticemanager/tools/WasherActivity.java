@@ -39,7 +39,7 @@ public class WasherActivity extends AppCompatActivity {
 
     private static RecyclerView rvWasherFloor;
     private static WasherFloorAdapter washerFloorAdapter;
-    public static ArrayList<WasherFloorData> globalfloors = new ArrayList<>();
+    public static ArrayList<WasherFloorData> globalfloors;
     private static WasherApi washerApi;
     private static DormitoryApi dormitoryApi;
     static SharedPreferences pref;
@@ -50,6 +50,7 @@ public class WasherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_washer);
+        globalfloors = new ArrayList<>();
         pref = getSharedPreferences("token",0);
 
         init();

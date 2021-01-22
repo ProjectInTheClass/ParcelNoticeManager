@@ -42,7 +42,7 @@ public class RoomActivity extends AppCompatActivity {
 
     private static RecyclerView rvFloor;
     private static FloorAdapter floorAdapter;
-    public static ArrayList<FloorData> globalfloors = new ArrayList<>();
+    public static ArrayList<FloorData> globalfloors;
     int totalFloor;
     private static RoomApi roomApi;
     private DormitoryData dormitoryData;
@@ -57,7 +57,7 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
         context = RoomActivity.this;
-
+        globalfloors = new ArrayList<>();
         pref = getSharedPreferences("token",0);
         init();
 
@@ -76,6 +76,8 @@ public class RoomActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(DormitoryApi.class);
+
+
 
 
         Call<DormitoryData> callGetDormitory = dormitoryApi.get_dormitory(getToken());
