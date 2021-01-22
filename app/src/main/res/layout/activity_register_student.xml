@@ -18,16 +18,12 @@
         android:theme="@style/ToolbarTheme"/>
 
     <AutoCompleteTextView
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
         android:id="@+id/autoCompleteTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:gravity="center_vertical"
-        android:textColorHint="#979797"
-        android:hint="학생 이름을 입력해주세요"
-        android:textSize="22sp"
-        android:fontFamily="@font/nexon_gothic_lv1_bold"
+        android:textColorHint="#555555"
+        android:hint="학생이름을 이력해주세요"
         android:completionThreshold="1" />
 
     <LinearLayout
@@ -41,9 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/all_button_background"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorAccent"
             android:shadowColor="#FFFFFF"
             android:text="등록"
             android:textColor="#000000"
@@ -56,11 +51,10 @@
             android:id="@+id/button_register_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"
             android:layout_gravity="center"
-            android:background="@drawable/all_button_background"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/colorAccent"
             android:shadowColor="#FFFFFF"
             android:text="취소"
             android:textColor="#000000"
