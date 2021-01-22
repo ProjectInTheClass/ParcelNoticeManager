@@ -14,7 +14,7 @@
         android:layout_height="70dp"
         android:background="@drawable/all_button_background"
         android:backgroundTint="@color/colorAccent"
-        android:text="101"
+        android:text=""
         android:fontFamily="@font/nexon_gothic_lv1_bold"
         android:textSize="25sp"
         android:gravity="center"

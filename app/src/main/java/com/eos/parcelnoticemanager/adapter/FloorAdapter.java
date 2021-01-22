@@ -74,7 +74,7 @@ public class FloorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ((GridViewHolder)holder).recyclerView.setAdapter(new RoomAdapter(context, floors.get(position).rooms));
         ((GridViewHolder)holder).recyclerView.setLayoutManager(new GridLayoutManager(context, 5));
         ((GridViewHolder)holder).recyclerView.setHasFixedSize(true);
-        ((GridViewHolder)holder).tvFloorNum.setText(String.valueOf(floors.get(position).floorNum));
+        ((GridViewHolder)holder).tvFloorNum.setText(String.valueOf(floors.get(position).floorNum)+"층");
     }
 
     @Override
