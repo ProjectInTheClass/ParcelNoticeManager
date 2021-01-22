@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="1층"
+            android:textColor="#000000"
             android:fontFamily="@font/nexon_gothic_lv1_bold"
             android:textSize="28sp"
             android:layout_marginBottom="10dp"
