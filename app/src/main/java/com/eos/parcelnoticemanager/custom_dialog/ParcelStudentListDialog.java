@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ public class ParcelStudentListDialog extends Dialog {
     private Context context;
     private RoomData room;
     private RecyclerView rvStudent;
+    private Button btnBack;
+    private TextView tvNoStudent;
 
     public ParcelStudentListDialog(@NonNull Context context, RoomData room) {
         super(context);
@@ -49,6 +52,14 @@ public class ParcelStudentListDialog extends Dialog {
         setContentView(R.layout.parcel_receiver_dialog);
 
         rvStudent = findViewById(R.id.parcel_recyclerView_students);
+        tvNoStudent = findViewById(R.id.textView_no_student);
+        btnBack = findViewById(R.id.button_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         init();
     }
     public void init(){
@@ -69,6 +80,7 @@ public class ParcelStudentListDialog extends Dialog {
                 LinearLayoutManager manager = new LinearLayoutManager(context);
                 rvStudent.setLayoutManager(manager);
                 rvStudent.setAdapter(adapter);
+                if(response.body().size()==0) tvNoStudent.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -111,7 +123,8 @@ public class ParcelStudentListDialog extends Dialog {
         }
 
         public class CustomViewHolder extends RecyclerView.ViewHolder {
-            public TextView tvStudentName;
+            TextView tvStudentName;
+
 
             public CustomViewHolder(final View itemView) {
                 super(itemView);

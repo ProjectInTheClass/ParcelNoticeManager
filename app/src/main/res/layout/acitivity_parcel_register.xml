@@ -19,10 +19,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/parcel_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryDark"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:theme="@style/ToolbarTheme"
         app:title="택배 등록"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

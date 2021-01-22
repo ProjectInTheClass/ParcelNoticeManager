@@ -68,7 +68,7 @@ public class ParcelDetailDialog extends Dialog {
                 callGetResponse.enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"틍록되었습니다.",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

@@ -15,11 +15,14 @@
 
 
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/parcel_textView_floor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="1층"
-            android:textSize="30sp"
+            android:fontFamily="@font/nexon_gothic_lv1_bold"
+            android:textSize="28sp"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
