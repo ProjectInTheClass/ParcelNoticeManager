@@ -68,7 +68,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.CustomViewHold
             tvRoomNum.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    whichId = room.getId();
+                    int position = getAdapterPosition();
+                    whichId = rooms.get(position).getId();
                     RoomActivity.switchContext();
 
                 }
